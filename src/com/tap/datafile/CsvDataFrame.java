@@ -6,16 +6,20 @@ public class CsvDataFrame extends DataFrame {
 	// TODO ASK hem de fer-lo variable?
 	final String DELIMITER = ";";
 
-	public CsvDataFrame(Scanner file) {
-		int i = 0;
+	public CsvDataFrame(Scanner file) throws ItemWithIncorrectNumberOfAttributesException {
+		int labelIndex = 0, items = 0;
 
 		while (file.hasNextLine()) {
-			String[] row = file.nextLine().split(DELIMITER);
+			// Remove all double quotes and split the row by DELIMITER
+			String[] row = file.nextLine().replace("\"", "").split(DELIMITER);
 
-			if (i == 0) { // read the first name (labels)
-				for (String label : row) labels.put(label, i++);
+			if (labelIndex == 0) { // read the first name (labels)
+				for (String label : row) labels.put(label, labelIndex++);
 			} else {
-				if (row.length != i) {}// TODO raise exception
+				items++;
+
+				if (row.length != labelIndex)
+					throw new ItemWithIncorrectNumberOfAttributesException(items, labelIndex, row.length);
 
 				content.add(row);
 			}

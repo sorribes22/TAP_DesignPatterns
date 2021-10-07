@@ -2,6 +2,7 @@ package com.tap;
 
 import com.tap.datafile.CsvDataFrame;
 import com.tap.datafile.DataFrame;
+import com.tap.datafile.ItemWithIncorrectNumberOfAttributesException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -22,7 +23,11 @@ public class Main {
 		switch (fileExtension(filename)) {
 			case "csv":
 				// TODO abstract factory
-				dataFrame = new CsvDataFrame(file);
+				try {
+					dataFrame = new CsvDataFrame(file);
+				} catch (ItemWithIncorrectNumberOfAttributesException e) {
+					e.printStackTrace();
+				}
 				break;
 		}
 
