@@ -1,21 +1,20 @@
-package com.tap.datafile;
+package com.tap.dataframe;
 
 import com.tap.query.IQuery;
 
 import java.util.*;
 
-// TODO ASK DataFrame<T> té sentit?
-public abstract class DataFrame implements Iterable<String[]> {
+public abstract class DataFrame implements Iterable<Map<String, Object>> {
 
 	/**
-	 * Labels and their index position.
+	 * Names of the columns.
 	 */
-	protected Map<String, Integer> labels = new HashMap<>();
+	protected List<String> labels = new ArrayList<>();
 
 	/**
 	 * Rows that contains de items information.
 	 */
-	protected List<String[]> content = new ArrayList<>();
+	protected List<Map<String, Object>> content = new ArrayList<>();
 
 	/**
 	 * Returns the value from specific attribute item.
@@ -24,8 +23,8 @@ public abstract class DataFrame implements Iterable<String[]> {
 	 * @param label column
 	 * @return value of a row and column
 	 */
-	public String at(int row, String label) {
-		return content.get(row)[labels.get(label)];
+	public Object at(int row, String label) {
+		return content.get(row).get(label);
 	}
 
 	/**
@@ -34,11 +33,11 @@ public abstract class DataFrame implements Iterable<String[]> {
 	 * @param position vector position (row * #columns + column)
 	 * @return value of a row and column
 	 */
-	public String iat(int position) {
+	public Object iat(int position) {
 		int row = position / labels.size();
-		int column = position % labels.size();
+		int columnIndex = position % labels.size();
 
-		return content.get(row)[column];
+		return content.get(row).get(labels.get(columnIndex));
 	}
 
 	/**
@@ -55,21 +54,26 @@ public abstract class DataFrame implements Iterable<String[]> {
 		return content.size();
 	}
 
-	/**
-	 * TODO ASK return correcte?
-	 *
-	 * @param comparator
-	 * @return
-	 */
+//	/**
+//	 * TODO ASK return correcte?
+//	 *
+//	 * @param comparator
+//	 * @return
+//	 */
 //	public List<String[]> sort(Comparator<List<String[]>> comparator) {
 //		// (List<String>) llista.subList(from, to);
 //	}
-//
+
+
+//	/**
+//	 * @param condition
+//	 * @return
+//	 */
 //	public List<String> query(IQuery<String[]> condition) {
 //
 //	}
 	@Override
-	public Iterator<String[]> iterator() {
+	public Iterator<Map<String, Object>> iterator() {
 		return content.iterator();
 	}
 
@@ -79,6 +83,12 @@ public abstract class DataFrame implements Iterable<String[]> {
 			"labels=" + labels +
 			", content=[";
 
+		content.forEach(item -> {
+			output = output.concat("\n\t");
+			for (String column : row) {
+				output = output.concat("\t".concat(column).concat(", "));
+			}
+		});
 		for (String[] row : content) {
 			output = output.concat("\n\t");
 			for (String column : row) {

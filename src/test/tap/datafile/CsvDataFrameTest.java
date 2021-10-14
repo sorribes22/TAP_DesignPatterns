@@ -1,7 +1,7 @@
 package test.tap.datafile;
 
-import com.tap.datafile.CsvDataFrame;
-import com.tap.datafile.ItemWithIncorrectNumberOfAttributesException;
+import com.tap.dataframe.CsvDataFrame;
+import com.tap.dataframe.ItemWithIncorrectNumberOfAttributesException;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.DisplayName;
@@ -14,7 +14,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 // https://www.vogella.com/tutorials/JUnit/article.html
 public class CsvDataFrameTest {
-// TODO ASK estem seguin la convenció corresponent per l'estructura de fitxers dels tests?
 
 	CsvDataFrame dataFrame;
 //	@BeforeEach
@@ -32,7 +31,7 @@ public class CsvDataFrameTest {
 			""";
 
 		try {
-			dataFrame = new CsvDataFrame(mockScanner(fileContent));
+			dataFrame = new CsvDataFrame(fakeScanner(fileContent));
 		} catch (ItemWithIncorrectNumberOfAttributesException e) {
 			fail();
 		}
@@ -60,7 +59,7 @@ public class CsvDataFrameTest {
 			""";
 
 		Exception exception = assertThrows(ItemWithIncorrectNumberOfAttributesException.class, () -> {
-			dataFrame = new CsvDataFrame(mockScanner(fileContent));
+			dataFrame = new CsvDataFrame(fakeScanner(fileContent));
 		});
 
 		assertEquals("Item #1 expected to be 3 attributes long. Found 4", exception.getMessage());
@@ -74,7 +73,7 @@ public class CsvDataFrameTest {
 	 * @return mocked scanner
 	 */
 	@Contract("_ -> new")
-	private @NotNull Scanner mockScanner(@NotNull String fileContent) {
+	private @NotNull Scanner fakeScanner(@NotNull String fileContent) {
 		System.setIn(new ByteArrayInputStream(fileContent.getBytes()));
 
 		return new Scanner(System.in);

@@ -1,4 +1,4 @@
-package com.tap.datafile;
+package com.tap.dataframe;
 
 public class ItemWithIncorrectNumberOfAttributesException extends Exception {
 

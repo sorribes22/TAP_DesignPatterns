@@ -1,8 +1,8 @@
 package com.tap;
 
-import com.tap.datafile.CsvDataFrame;
-import com.tap.datafile.DataFrame;
-import com.tap.datafile.ItemWithIncorrectNumberOfAttributesException;
+import com.tap.dataframe.CsvDataFrame;
+import com.tap.dataframe.DataFrame;
+import com.tap.dataframe.ItemWithIncorrectNumberOfAttributesException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
