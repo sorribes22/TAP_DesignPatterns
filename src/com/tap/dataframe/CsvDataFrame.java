@@ -5,15 +5,21 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class CsvDataFrame extends DataFrame {
-	// TODO ASK hem de fer-lo variable?
-	final String DELIMITER = ";";
+
+	private String delimiter;
 
 	public CsvDataFrame(Scanner file) throws ItemWithIncorrectNumberOfAttributesException {
+		this(file, ";");
+	}
+
+	public CsvDataFrame(Scanner file, String delimiter) throws ItemWithIncorrectNumberOfAttributesException {
 		int labelIndex = 0, items = 0;
+
+		this.delimiter = delimiter;
 
 		while (file.hasNextLine()) {
 			// Remove all double quotes and split the row by DELIMITER
-			String[] row = file.nextLine().replace("\"", "").split(DELIMITER);
+			String[] row = file.nextLine().replace("\"", "").split(this.delimiter);
 
 			if (labelIndex == 0) { // read the first name (labels)
 				for (String label : row) {
