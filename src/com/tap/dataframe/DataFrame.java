@@ -60,7 +60,7 @@ public abstract class DataFrame implements Iterable<Map<String, Object>> {
 //	 * @param comparator
 //	 * @return
 //	 */
-//	public List<String[]> sort(Comparator<List<String[]>> comparator) {
+//	public List<String[]> sort(Comparator<Map<String, Object>> comparator) {
 //		// (List<String>) llista.subList(from, to);
 //	}
 
@@ -69,7 +69,7 @@ public abstract class DataFrame implements Iterable<Map<String, Object>> {
 //	 * @param condition
 //	 * @return
 //	 */
-//	public List<String> query(IQuery<String[]> condition) {
+//	public List<String> query(IQuery<Map<String, Object>> condition) {
 //
 //	}
 	@Override

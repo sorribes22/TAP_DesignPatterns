@@ -2,8 +2,6 @@ package test.tap.datafile;
 
 import com.tap.dataframe.CsvDataFrame;
 import com.tap.dataframe.ItemWithIncorrectNumberOfAttributesException;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,18 +22,21 @@ public class CsvDataFrameTest {
 	@Test
 	@DisplayName("Can load CSV file")
 	void testLoadCsv() {
+		// PREPARATION
 		String fileContent = """
 			Nom;"Número de pàgines";Editorial
 			"Patrones de diseño";364;Pearson
 			"Arquitectura limpia";320;Anaya
 			""";
 
+		// execution
 		try {
 			dataFrame = new CsvDataFrame(fakeScanner(fileContent));
 		} catch (ItemWithIncorrectNumberOfAttributesException e) {
 			fail();
 		}
 
+		// assertion
 		assert dataFrame.size() == 2;
 		assert dataFrame.columns() == 3;
 
@@ -72,8 +73,7 @@ public class CsvDataFrameTest {
 	 * @param fileContent content of the file to mock
 	 * @return mocked scanner
 	 */
-	@Contract("_ -> new")
-	private @NotNull Scanner fakeScanner(@NotNull String fileContent) {
+	private Scanner fakeScanner(String fileContent) {
 		System.setIn(new ByteArrayInputStream(fileContent.getBytes()));
 
 		return new Scanner(System.in);

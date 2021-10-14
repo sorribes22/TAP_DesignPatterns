@@ -1,5 +1,7 @@
 package com.tap.dataframe;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class CsvDataFrame extends DataFrame {
@@ -14,14 +16,23 @@ public class CsvDataFrame extends DataFrame {
 			String[] row = file.nextLine().replace("\"", "").split(DELIMITER);
 
 			if (labelIndex == 0) { // read the first name (labels)
-				for (String label : row) labels.put(label, labelIndex++);
+				for (String label : row) {
+					labels.add(label);
+					labelIndex++;
+				}
 			} else {
 				items++;
 
 				if (row.length != labelIndex)
 					throw new ItemWithIncorrectNumberOfAttributesException(items, labelIndex, row.length);
 
-				content.add(row);
+				Map<String, Object> newRow = new HashMap<>();
+
+				for (int i = 0; i < row.length; i++) {
+					newRow.put(labels.get(i), row[i]);
+				}
+
+				content.add(newRow);
 			}
 		}
 	}
