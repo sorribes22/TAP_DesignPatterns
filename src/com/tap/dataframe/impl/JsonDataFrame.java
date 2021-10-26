@@ -5,9 +5,9 @@ import com.tap.dataframe.ItemWithIncorrectNumberOfAttributesException;
 
 import java.util.Scanner;
 
-public class JsonDataFrame extends DataFrame {
-
-	public JsonDataFrame(Scanner scanner) throws ItemWithIncorrectNumberOfAttributesException {
-		this.loadContent(scanner);
-	}
-}
+//public class JsonDataFrame extends DataFrame {
+//
+//	public JsonDataFrame(Scanner scanner) throws ItemWithIncorrectNumberOfAttributesException {
+//		this.loadContent(scanner);
+//	}
+//}

@@ -3,7 +3,7 @@ package com.tap.query;
 import java.util.Comparator;
 import java.util.Map;
 
-public class StringComparison implements IQuery<Object extends Comparable<? super Object>> {
+public class StringComparison implements IQuery<Object> {
 
 	private String attribute;
 
@@ -26,7 +26,7 @@ public class StringComparison implements IQuery<Object extends Comparable<? supe
 	public boolean fulfill(Object item) {
 		return switch (this.operator) {
 			case EQUALS -> item.equals(this.value);
-			case LESS -> item < this.value;
+//			case LESS -> item < this.value;
 //			case '<':
 //				return item.get(this.attribute).compareTo(value);
 			default -> false;

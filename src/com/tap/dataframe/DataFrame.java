@@ -3,10 +3,11 @@ package com.tap.dataframe;
 import com.tap.query.IQuery;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
-public abstract class DataFrame implements Iterable<Map<String, List<Object>>> {
-
+public abstract class DataFrame {
+    /**
+     * Number of items loaded
+     */
     protected int size = 0;
 
     /**
@@ -68,19 +69,19 @@ public abstract class DataFrame implements Iterable<Map<String, List<Object>>> {
 //	}
 
 
-    /**
-     *
-     * @param condition
-     * @return
-     */
-	public List<Map<String, Object>> query(IQuery<Map<String, Object>> condition) {
-        return content.stream().filter(condition::fulfill).collect(Collectors.toList());
-	}
+//    /**
+//     *
+//     * @param condition
+//     * @return
+//     */
+//	public List<Map<String, Object>> query(IQuery<Map<String, Object>> condition) {
+//        return content.stream().filter(condition::fulfill).collect(Collectors.toList());
+//	}
 
-    @Override
-    public Iterator<Map<String, List<Object>>> iterator() {
-        return content.iterator();
-    }
+//    @Override // TODO
+//    public Iterator<Map<String, List<Object>>> iterator() {
+//        return content;
+//    }
 
     @Override
     public String toString() {
@@ -88,9 +89,18 @@ public abstract class DataFrame implements Iterable<Map<String, List<Object>>> {
                 "labels=" + labels +
                 ", content=[\n";
 
-        for (Map<String, Object> item : content) {
-            for (String label : item.keySet()) {
-                output = output.concat("\t".concat(label).concat(": ").concat(item.get(label).toString()));
+        // TODO per quan tinguem l'iterator
+//        for (Map<String, Object> item : content) {
+//            for (String label : item.keySet()) {
+//                output = output.concat("\t".concat(label).concat(": ").concat(item.get(label).toString()));
+//            }
+//
+//            output = output.concat("\n");
+//        }
+
+        for (int i = 0; i < size; i++) {
+            for (String label : labels) {
+                output = output.concat("\t".concat(label).concat(": ").concat(content.get(label).get(i).toString()));
             }
 
             output = output.concat("\n");
