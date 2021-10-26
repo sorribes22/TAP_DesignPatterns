@@ -1,6 +1,6 @@
 package test.tap.datafile;
 
-import com.tap.dataframe.CsvDataFrame;
+import com.tap.dataframe.impl.CsvDataFrame;
 import com.tap.dataframe.ItemWithIncorrectNumberOfAttributesException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

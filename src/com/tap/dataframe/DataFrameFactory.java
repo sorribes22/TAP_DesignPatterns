@@ -1,5 +1,7 @@
 package com.tap.dataframe;
 
+import com.tap.dataframe.impl.CsvDataFrame;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Optional;

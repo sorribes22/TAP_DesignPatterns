@@ -5,7 +5,9 @@ import com.tap.query.IQuery;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public abstract class DataFrame implements Iterable<Map<String, Object>> {
+public abstract class DataFrame implements Iterable<Map<String, List<Object>>> {
+
+    protected int size = 0;
 
     /**
      * Names of the columns.
@@ -15,7 +17,9 @@ public abstract class DataFrame implements Iterable<Map<String, Object>> {
     /**
      * Rows that contains de items information.
      */
-    protected List<Map<String, Object>> content = new ArrayList<>();
+    protected Map<String, List<Object>> content = new LinkedHashMap<>();
+
+    public abstract void loadContent(Scanner scanner) throws ItemWithIncorrectNumberOfAttributesException;
 
     /**
      * Returns the value from specific attribute item.
@@ -25,7 +29,7 @@ public abstract class DataFrame implements Iterable<Map<String, Object>> {
      * @return value of a row and column
      */
     public Object at(int row, String label) {
-        return content.get(row).get(label);
+        return content.get(label).get(row);
     }
 
     /**
@@ -36,20 +40,7 @@ public abstract class DataFrame implements Iterable<Map<String, Object>> {
      * @return value of a row and column
      */
     public Object iat(int row, int column) {
-        return content.get(row).get(labels.get(column));
-    }
-
-    /**
-     * Returns the value from specific attribute item.
-     *
-     * @param position vector position (row * #columns + column)
-     * @return value of a row and column
-     */
-    public Object iat(int position) {
-        int row = position / labels.size();
-        int column = position % labels.size();
-
-        return this.iat(row, column);
+        return content.get(labels.get(column)).get(row);
     }
 
     /**
@@ -63,7 +54,7 @@ public abstract class DataFrame implements Iterable<Map<String, Object>> {
      * @return number of items
      */
     public int size() {
-        return content.size();
+        return size;
     }
 
 //	/**
@@ -87,7 +78,7 @@ public abstract class DataFrame implements Iterable<Map<String, Object>> {
 	}
 
     @Override
-    public Iterator<Map<String, Object>> iterator() {
+    public Iterator<Map<String, List<Object>>> iterator() {
         return content.iterator();
     }
 

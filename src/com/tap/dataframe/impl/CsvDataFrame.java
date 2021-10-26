@@ -1,4 +1,7 @@
-package com.tap.dataframe;
+package com.tap.dataframe.impl;
+
+import com.tap.dataframe.DataFrame;
+import com.tap.dataframe.ItemWithIncorrectNumberOfAttributesException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,18 +11,20 @@ public class CsvDataFrame extends DataFrame {
 
 	private String delimiter;
 
-	public CsvDataFrame(Scanner file) throws ItemWithIncorrectNumberOfAttributesException {
-		this(file, ";");
+	public CsvDataFrame() {
+		this(";");
 	}
 
-	public CsvDataFrame(Scanner file, String delimiter) throws ItemWithIncorrectNumberOfAttributesException {
+	public CsvDataFrame(String delimiter) {
+		this.delimiter = delimiter;
+	}
+
+	public void loadContent(Scanner scanner) throws ItemWithIncorrectNumberOfAttributesException {
 		int labelIndex = 0, items = 0;
 
-		this.delimiter = delimiter;
-
-		while (file.hasNextLine()) {
+		while (scanner.hasNextLine()) {
 			// Remove all double quotes and split the row by DELIMITER
-			String[] row = file.nextLine().replace("\"", "").split(this.delimiter);
+			String[] row = scanner.nextLine().replace("\"", "").split(this.delimiter);
 
 			if (labelIndex == 0) { // read the first name (labels)
 				for (String label : row) {
