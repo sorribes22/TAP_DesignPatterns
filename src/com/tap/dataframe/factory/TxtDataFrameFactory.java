@@ -1,6 +1,4 @@
-package com.tap.factory;
-
-import com.tap.dataframe.DataFrame;
+package com.tap.dataframe.factory;
 
 //public class TxtDataFrameFactory implements DataFrameFactory{
 //

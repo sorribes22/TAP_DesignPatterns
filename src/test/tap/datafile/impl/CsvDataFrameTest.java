@@ -1,12 +1,17 @@
-package test.tap.datafile;
+package test.tap.datafile.impl;
 
+import com.tap.dataframe.DataFrame;
+import com.tap.dataframe.factory.CsvDataFrameFactory;
 import com.tap.dataframe.impl.CsvDataFrame;
 import com.tap.dataframe.ItemWithIncorrectNumberOfAttributesException;
+import com.tap.dataframe.sort.NumberAscending;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 // https://www.vogella.com/tutorials/JUnit/article.html
 public class CsvDataFrameTest {
 
-	CsvDataFrame dataFrame;
+	DataFrame dataFrame;
 //	@BeforeEach
 //	void setUp() {
 //
@@ -25,13 +30,13 @@ public class CsvDataFrameTest {
 	void testLoadCsv() {
 		// PREPARATION
 		String fileContent = """
-			Nom;"Número de pàgines";Editorial
-			"Patrones de diseño";364;Pearson
-			"Arquitectura limpia";320;Anaya
+			Name;"Number of pages";Editorial
+			"Design patterns";364;Pearson
+			"Clean architecture";320;Anaya
 			""";
 
 		// execution
-		dataFrame = new CsvDataFrame();
+		dataFrame = new CsvDataFrameFactory().makeDataFrame();
 
 		try {
 			dataFrame.loadContent(fakeScanner(fileContent));
@@ -44,10 +49,10 @@ public class CsvDataFrameTest {
 		assert dataFrame.columns() == 3;
 
 		assertAll("Content has been loaded",
-			() -> assertEquals("Patrones de diseño", dataFrame.iat(0, 0)),
+			() -> assertEquals("Design patterns", dataFrame.iat(0, 0)),
 			() -> assertEquals("364", dataFrame.iat(0, 1)),
 			() -> assertEquals("Pearson", dataFrame.iat(0, 2)),
-			() -> assertEquals("Arquitectura limpia", dataFrame.iat(1, 0)),
+			() -> assertEquals("Clean architecture", dataFrame.iat(1, 0)),
 			() -> assertEquals("320", dataFrame.iat(1, 1)),
 			() -> assertEquals("Anaya", dataFrame.iat(1, 2))
 		);
@@ -57,12 +62,12 @@ public class CsvDataFrameTest {
 	@DisplayName("Cannot add row with different number of columns")
 	void testCannotAddRowWithDifferentNumberOfColumns() {
 		String fileContent = """
-			Nom;"Número de pàgines";Editorial
-			"Patrones de diseño";364;Pearson;"NOU CAMP ERRONI"
-			"Arquitectura limpia";320;Anaya
+			Name;"Number of pages";Editorial
+			"Design patterns";364;Pearson;ERROR
+			"Clean architecture";320;Anaya
 			""";
 
-		dataFrame = new CsvDataFrame();
+		dataFrame = new CsvDataFrameFactory().makeDataFrame();
 		Exception exception = assertThrows(ItemWithIncorrectNumberOfAttributesException.class, () -> {
 			dataFrame.loadContent(fakeScanner(fileContent));
 		});
@@ -70,12 +75,33 @@ public class CsvDataFrameTest {
 		assertEquals("Item #1 expected to be 3 attributes long. Found 4", exception.getMessage());
 	}
 
+	@Test
+	@DisplayName("Can sort column")
+	void testCanSortColumn() {
+		String fileContent = """
+			Name;"Number of pages";Editorial
+			"Design patterns";364;Pearson
+			"Clean architecture";320;Anaya
+			""";
+
+		dataFrame = new CsvDataFrameFactory().makeDataFrame();
+		try {
+			dataFrame.loadContent(fakeScanner(fileContent));
+		} catch (ItemWithIncorrectNumberOfAttributesException e) {
+			fail();
+		}
+
+		Comparator<String> comparator = new NumberAscending();
+		List<String> result = dataFrame.sort("Number of pages", comparator);
+
+		assert result.get(0).equals("320");
+		assert result.get(1).equals("364");
+	}
+
 	/**
-	 *
-	 *
-	 * @author http://www.javased.com/?post=1647907
 	 * @param fileContent content of the file to mock
 	 * @return mocked scanner
+	 * @author http://www.javased.com/?post=1647907
 	 */
 	private Scanner fakeScanner(String fileContent) {
 		System.setIn(new ByteArrayInputStream(fileContent.getBytes()));

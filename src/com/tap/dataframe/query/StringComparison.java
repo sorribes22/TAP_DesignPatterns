@@ -1,4 +1,4 @@
-package com.tap.query;
+package com.tap.dataframe.query;
 
 import java.util.Map;
 
@@ -12,12 +12,8 @@ public class StringComparison implements IQuery<Map<String, String>> {
 
 	public StringComparison(String attribute, Operator operator, String match) {
 		this.attribute = attribute;
-		this.setOperator(operator);
-		this.match = match;
-	}
-
-	private void setOperator (Operator operator) {
 		this.operator = operator;
+		this.match = match;
 	}
 
 	@Override
@@ -32,10 +28,5 @@ public class StringComparison implements IQuery<Map<String, String>> {
 			case GREATER_OR_EQUAL -> value.equals(this.match) || value.compareTo(this.match) > 0;
 			default -> false;
 		};
-	}
-
-	@Override
-	public String getAttribute() {
-		return this.attribute;
 	}
 }

@@ -1,6 +1,6 @@
 package com.tap.dataframe;
 
-import com.tap.query.IQuery;
+import com.tap.dataframe.query.IQuery;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -59,22 +59,10 @@ public abstract class DataFrame implements Iterable<Map<String, String>> {
         return size;
     }
 
-	/**
-	 *
-	 *
-	 * @param comparator
-	 * @return
-	 */
 	public List<String> sort(String column, Comparator<String> comparator) {
 		return content.get(column).stream().sorted(comparator).collect(Collectors.toList());
 	}
 
-
-    /**
-     *
-     * @param condition
-     * @return
-     */
 	public Map<String, List<String>> query(IQuery<Map<String, String>> condition) {
         Map<String, List<String>> result = new HashMap<>();
         for (String label : labels) result.put(label, new ArrayList<>());

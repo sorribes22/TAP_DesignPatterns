@@ -1,4 +1,4 @@
-package com.tap.query;
+package com.tap.dataframe.query;
 
 public interface IQuery<T> {
 	/**
@@ -8,11 +8,4 @@ public interface IQuery<T> {
 	 * @return item passes the test
 	 */
 	boolean fulfill(T item);
-
-	/**
-	 * Returns the attribute to query.
-	 *
-	 * @return attribute to query
-	 */
-	String getAttribute();
 }

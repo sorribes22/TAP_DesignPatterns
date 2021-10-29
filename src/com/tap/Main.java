@@ -3,12 +3,15 @@ package com.tap;
 import com.tap.dataframe.DataFrame;
 import com.tap.dataframe.ItemWithIncorrectNumberOfAttributesException;
 import com.tap.dataframe.impl.CsvDataFrame;
-import com.tap.query.IQuery;
-import com.tap.query.Operator;
-import com.tap.query.StringComparison;
+import com.tap.dataframe.query.IQuery;
+import com.tap.dataframe.query.Operator;
+import com.tap.dataframe.query.StringComparison;
+import com.tap.dataframe.sort.NumberAscending;
+import com.tap.dataframe.sort.NumberDescending;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Scanner;
@@ -36,6 +39,12 @@ public class Main {
 
 		IQuery<Map<String, String>> query = new StringComparison("Nom", Operator.EQUALS, "Àlex");
 		System.out.println(dataFrame.query(query));
+
+		Comparator<String> comparator = new NumberAscending();
+		System.out.println(dataFrame.sort("Altura", comparator));
+
+		Comparator<String> comparator2 = new NumberDescending();
+		System.out.println(dataFrame.sort("Altura", comparator2));
 	}
 
 	/**
