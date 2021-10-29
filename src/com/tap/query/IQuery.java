@@ -8,4 +8,11 @@ public interface IQuery<T> {
 	 * @return item passes the test
 	 */
 	boolean fulfill(T item);
+
+	/**
+	 * Returns the attribute to query.
+	 *
+	 * @return attribute to query
+	 */
+	String getAttribute();
 }

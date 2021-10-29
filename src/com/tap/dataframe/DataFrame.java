@@ -3,8 +3,9 @@ package com.tap.dataframe;
 import com.tap.query.IQuery;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
-public abstract class DataFrame {
+public abstract class DataFrame implements Iterable<Map<String, String>> {
     /**
      * Number of items loaded
      */
@@ -18,7 +19,7 @@ public abstract class DataFrame {
     /**
      * Rows that contains de items information.
      */
-    protected Map<String, List<Object>> content = new LinkedHashMap<>();
+    protected Map<String, List<String>> content = new LinkedHashMap<>();
 
     public abstract void loadContent(Scanner scanner) throws ItemWithIncorrectNumberOfAttributesException;
 
@@ -58,30 +59,36 @@ public abstract class DataFrame {
         return size;
     }
 
-//	/**
-//	 * TODO ASK return correcte?
-//	 *
-//	 * @param comparator
-//	 * @return
-//	 */
-//	public List<String[]> sort(Comparator<Map<String, Object>> comparator) {
-//		// (List<String>) llista.subList(from, to);
-//	}
+	/**
+	 *
+	 *
+	 * @param comparator
+	 * @return
+	 */
+	public List<String> sort(String column, Comparator<String> comparator) {
+		return content.get(column).stream().sorted(comparator).collect(Collectors.toList());
+	}
 
 
-//    /**
-//     *
-//     * @param condition
-//     * @return
-//     */
-//	public List<Map<String, Object>> query(IQuery<Map<String, Object>> condition) {
-//        return content.stream().filter(condition::fulfill).collect(Collectors.toList());
-//	}
+    /**
+     *
+     * @param condition
+     * @return
+     */
+	public Map<String, List<String>> query(IQuery<Map<String, String>> condition) {
+        Map<String, List<String>> result = new HashMap<>();
+        for (String label : labels) result.put(label, new ArrayList<>());
 
-//    @Override // TODO
-//    public Iterator<Map<String, List<Object>>> iterator() {
-//        return content;
-//    }
+        for (Map<String, String> row : this) {
+            if (condition.fulfill(row)) {
+                for (String column : row.keySet()) {
+                    result.get(column).add(row.get(column));
+                }
+            }
+        }
+
+        return result;
+	}
 
     @Override
     public String toString() {
@@ -89,23 +96,44 @@ public abstract class DataFrame {
                 "labels=" + labels +
                 ", content=[\n";
 
-        // TODO per quan tinguem l'iterator
-//        for (Map<String, Object> item : content) {
-//            for (String label : item.keySet()) {
-//                output = output.concat("\t".concat(label).concat(": ").concat(item.get(label).toString()));
-//            }
-//
-//            output = output.concat("\n");
-//        }
-
-        for (int i = 0; i < size; i++) {
-            for (String label : labels) {
-                output = output.concat("\t".concat(label).concat(": ").concat(content.get(label).get(i).toString()));
+        for (Map<String, String> item : this) {
+            for (String label : item.keySet()) {
+                output = output.concat("\t".concat(label).concat(": ").concat(item.get(label)));
             }
 
             output = output.concat("\n");
         }
 
         return output.concat("]}");
+    }
+
+    public Iterator<Map<String, String>> iterator() {
+        return new Iterator<>() {
+
+            private int currentIndex = 0;
+
+            @Override
+            public boolean hasNext() {
+                return currentIndex < size;
+            }
+
+            @Override
+            public Map<String, String> next() {
+                Map<String, String> row = new HashMap<>();
+
+                for (String label : labels) {
+                    row.put(label, content.get(label).get(currentIndex));
+                }
+
+                currentIndex++;
+
+                return row;
+            }
+
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+        };
     }
 }

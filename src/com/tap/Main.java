@@ -4,6 +4,7 @@ import com.tap.dataframe.DataFrame;
 import com.tap.dataframe.ItemWithIncorrectNumberOfAttributesException;
 import com.tap.dataframe.impl.CsvDataFrame;
 import com.tap.query.IQuery;
+import com.tap.query.Operator;
 import com.tap.query.StringComparison;
 
 import java.io.File;
@@ -16,8 +17,6 @@ public class Main {
 
 	private static Scanner file;
 
-	private String filename;
-
 	private static DataFrame dataFrame;
 
 	public static void main(String[] args) {
@@ -25,6 +24,7 @@ public class Main {
 
 		//DataFrameFactory factory = new DataFrameFactory(filename);
 		openFile(filename);
+
 		try {
 			dataFrame = new CsvDataFrame();
 			dataFrame.loadContent(file);
@@ -34,9 +34,8 @@ public class Main {
 
 		System.out.println(dataFrame);
 
-//		IQuery<Map<String, Object>> query = new StringComparison("Nom", '=', "Àlex");
-//		System.out.println(dataFrame.query(query));
-
+		IQuery<Map<String, String>> query = new StringComparison("Nom", Operator.EQUALS, "Àlex");
+		System.out.println(dataFrame.query(query));
 	}
 
 	/**
@@ -55,7 +54,7 @@ public class Main {
 	}
 
 	/**
-	 * // TODO ASK s'hauria de comprovar el mimetype?
+	 *
 	 *
 	 * @param filename Name of the file
 	 * @return File extension
