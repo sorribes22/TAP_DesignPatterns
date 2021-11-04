@@ -1,4 +1,4 @@
-package com.tap.query;
+package com.tap.dataframe.query;
 
 public interface IQuery<T> {
 	/**
