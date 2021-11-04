@@ -7,7 +7,12 @@ import java.util.Scanner;
 
 public class JsonDataFrame extends DataFrame {
 
-	public JsonDataFrame(Scanner scanner) throws ItemWithIncorrectNumberOfAttributesException {
-		this.loadContent(scanner);
+	public JsonDataFrame(){
+
+	}
+
+	@Override
+	public void loadContent(Scanner scanner) throws ItemWithIncorrectNumberOfAttributesException {
+
 	}
 }
