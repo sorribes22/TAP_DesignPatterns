@@ -1,8 +1,10 @@
 package com.tap;
 
 import com.tap.dataframe.DataFrame;
+import com.tap.dataframe.ItemWithIncorrectAttributeException;
 import com.tap.dataframe.ItemWithIncorrectNumberOfAttributesException;
 import com.tap.dataframe.impl.CsvDataFrame;
+import com.tap.dataframe.impl.JsonDataFrame;
 import com.tap.dataframe.query.IQuery;
 import com.tap.dataframe.query.Operator;
 import com.tap.dataframe.query.StringComparison;
@@ -23,28 +25,51 @@ public class Main {
 	private static DataFrame dataFrame;
 
 	public static void main(String[] args) {
-		String filename = "files/Prova.csv";
+//		String filename = "files/Prova.csv";
+//
+//		//DataFrameFactory factory = new DataFrameFactory(filename);
+//		openFile(filename);
+//
+//		try {
+//			dataFrame = new CsvDataFrame();
+//			dataFrame.loadContent(file);
+//		} catch (ItemWithIncorrectNumberOfAttributesException e) {
+//			e.printStackTrace();
+//		}
+//
+//		System.out.println(dataFrame);
+//
+//		IQuery<Map<String, String>> query = new StringComparison("Nom", Operator.EQUALS, "Àlex");
+//		System.out.println(dataFrame.query(query));
+//
+//		Comparator<String> comparator = new NumberAscending();
+//		System.out.println(dataFrame.sort("Altura", comparator));
+//
+//		Comparator<String> comparator2 = new NumberDescending();
+//		System.out.println(dataFrame.sort("Altura", comparator2));
+
+		String filename = "files/Prova.json";
 
 		//DataFrameFactory factory = new DataFrameFactory(filename);
 		openFile(filename);
 
 		try {
-			dataFrame = new CsvDataFrame();
+			dataFrame = new JsonDataFrame();
 			dataFrame.loadContent(file);
-		} catch (ItemWithIncorrectNumberOfAttributesException e) {
+		} catch (ItemWithIncorrectNumberOfAttributesException | ItemWithIncorrectAttributeException e) {
 			e.printStackTrace();
 		}
 
 		System.out.println(dataFrame);
 
-		IQuery<Map<String, String>> query = new StringComparison("Nom", Operator.EQUALS, "Àlex");
-		System.out.println(dataFrame.query(query));
-
-		Comparator<String> comparator = new NumberAscending();
-		System.out.println(dataFrame.sort("Altura", comparator));
-
-		Comparator<String> comparator2 = new NumberDescending();
-		System.out.println(dataFrame.sort("Altura", comparator2));
+//		IQuery<Map<String, String>> query = new StringComparison("Nom", Operator.EQUALS, "Àlex");
+//		System.out.println(dataFrame.query(query));
+//
+//		Comparator<String> comparator = new NumberAscending();
+//		System.out.println(dataFrame.sort("Altura", comparator));
+//
+//		Comparator<String> comparator2 = new NumberDescending();
+//		System.out.println(dataFrame.sort("Altura", comparator2));
 	}
 
 	/**

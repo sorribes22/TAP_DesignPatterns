@@ -21,7 +21,7 @@ public abstract class DataFrame implements Iterable<Map<String, String>> {
      */
     protected Map<String, List<String>> content = new LinkedHashMap<>();
 
-    public abstract void loadContent(Scanner scanner) throws ItemWithIncorrectNumberOfAttributesException;
+    public abstract void loadContent(Scanner scanner) throws ItemWithIncorrectNumberOfAttributesException, ItemWithIncorrectAttributeException;
 
     /**
      * Returns the value from specific attribute item.
@@ -60,6 +60,7 @@ public abstract class DataFrame implements Iterable<Map<String, String>> {
     }
 
 	public List<String> sort(String column, Comparator<String> comparator) {
+        // TODO si content.get(column) retorna null, retornar una llista buidae
 		return content.get(column).stream().sorted(comparator).collect(Collectors.toList());
 	}
 
@@ -78,21 +79,31 @@ public abstract class DataFrame implements Iterable<Map<String, String>> {
         return result;
 	}
 
+//    @Override
+//    public String toString() {
+//        String output = "DataFrame{" +
+//                "labels=" + labels +
+//                ", content=[\n";
+//
+//        for (Map<String, String> item : this) {
+//            for (String label : item.keySet()) {
+//                output = output.concat("\t".concat(label).concat(": ").concat(item.get(label)));
+//            }
+//
+//            output = output.concat("\n");
+//        }
+//
+//        return output.concat("]}");
+//    }
+
+
     @Override
     public String toString() {
-        String output = "DataFrame{" +
-                "labels=" + labels +
-                ", content=[\n";
-
-        for (Map<String, String> item : this) {
-            for (String label : item.keySet()) {
-                output = output.concat("\t".concat(label).concat(": ").concat(item.get(label)));
-            }
-
-            output = output.concat("\n");
-        }
-
-        return output.concat("]}");
+        return "DataFrame{" +
+            "size=" + size +
+            ", labels=" + labels +
+            ", content=" + content +
+            '}';
     }
 
     public Iterator<Map<String, String>> iterator() {
