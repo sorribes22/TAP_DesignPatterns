@@ -1,5 +1,8 @@
 package com.tap.dataframe;
 
+import com.tap.dataframe.exception.InvalidFileFormatException;
+import com.tap.dataframe.exception.ItemWithIncorrectAttributeException;
+import com.tap.dataframe.exception.ItemWithIncorrectNumberOfAttributesException;
 import com.tap.dataframe.query.IQuery;
 
 import java.util.*;
@@ -21,7 +24,7 @@ public abstract class DataFrame implements Iterable<Map<String, String>> {
      */
     protected Map<String, List<String>> content = new LinkedHashMap<>();
 
-    public abstract void loadContent(Scanner scanner) throws ItemWithIncorrectNumberOfAttributesException, ItemWithIncorrectAttributeException;
+    public abstract void loadContent(Scanner scanner) throws  InvalidFileFormatException;
 
     /**
      * Returns the value from specific attribute item.
@@ -79,7 +82,11 @@ public abstract class DataFrame implements Iterable<Map<String, String>> {
         return result;
 	}
 
-//    @Override
+    public Map<String, List<String>> getContent() {
+        return content;
+    }
+
+    //    @Override
 //    public String toString() {
 //        String output = "DataFrame{" +
 //                "labels=" + labels +
@@ -105,6 +112,19 @@ public abstract class DataFrame implements Iterable<Map<String, String>> {
             ", content=" + content +
             '}';
     }
+
+
+   /* public String toString(){
+        String retu = "";
+        for(String columns:labels)
+           retu=retu+columns;
+        retu = retu + "/n";
+        for (int i =0;i<labels.size();i++){
+            content.get(labels.get(i)).get()
+        }
+        return retu;
+           }
+    */
 
     public Iterator<Map<String, String>> iterator() {
         return new Iterator<>() {

@@ -1,11 +1,10 @@
 package test.tap.datafile.impl;
 
 import com.tap.dataframe.DataFrame;
+import com.tap.dataframe.exception.InvalidFileFormatException;
 import com.tap.dataframe.factory.CsvDataFrameFactory;
-import com.tap.dataframe.impl.CsvDataFrame;
-import com.tap.dataframe.ItemWithIncorrectNumberOfAttributesException;
+import com.tap.dataframe.exception.ItemWithIncorrectNumberOfAttributesException;
 import com.tap.dataframe.sort.NumberAscending;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -38,11 +37,11 @@ public class CsvDataFrameTest {
 		// execution
 		dataFrame = new CsvDataFrameFactory().makeDataFrame();
 
-//		try {
-//			dataFrame.loadContent(fakeScanner(fileContent));
-//		} catch (ItemWithIncorrectNumberOfAttributesException e) {
-//			fail();
-//		}
+		try {
+			dataFrame.loadContent(fakeScanner(fileContent));
+		} catch (InvalidFileFormatException e) {
+			fail();
+		}
 
 		// assertion
 		assert dataFrame.size() == 2;
@@ -87,7 +86,7 @@ public class CsvDataFrameTest {
 		dataFrame = new CsvDataFrameFactory().makeDataFrame();
 		try {
 			dataFrame.loadContent(fakeScanner(fileContent));
-		} catch (ItemWithIncorrectNumberOfAttributesException e) {
+		} catch (InvalidFileFormatException e) {
 			fail();
 		}
 

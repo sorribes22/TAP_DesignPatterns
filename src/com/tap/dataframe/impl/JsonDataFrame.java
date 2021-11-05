@@ -5,11 +5,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.tap.dataframe.DataFrame;
-import com.tap.dataframe.ItemWithIncorrectAttributeException;
-import com.tap.dataframe.ItemWithIncorrectNumberOfAttributesException;
+import com.tap.dataframe.exception.*;
 
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Scanner;
 
 public class JsonDataFrame extends DataFrame {

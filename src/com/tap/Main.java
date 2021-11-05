@@ -1,20 +1,14 @@
 package com.tap;
 
 import com.tap.dataframe.DataFrame;
-import com.tap.dataframe.ItemWithIncorrectAttributeException;
-import com.tap.dataframe.ItemWithIncorrectNumberOfAttributesException;
-import com.tap.dataframe.impl.CsvDataFrame;
+import com.tap.dataframe.exception.InvalidFileFormatException;
+import com.tap.dataframe.exception.ItemWithIncorrectAttributeException;
+import com.tap.dataframe.exception.ItemWithIncorrectNumberOfAttributesException;
 import com.tap.dataframe.impl.JsonDataFrame;
-import com.tap.dataframe.query.IQuery;
-import com.tap.dataframe.query.Operator;
-import com.tap.dataframe.query.StringComparison;
-import com.tap.dataframe.sort.NumberAscending;
-import com.tap.dataframe.sort.NumberDescending;
+import com.tap.dataframe.impl.TxtDataFrame;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Comparator;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -56,11 +50,12 @@ public class Main {
 		try {
 			dataFrame = new JsonDataFrame();
 			dataFrame.loadContent(file);
-		} catch (ItemWithIncorrectNumberOfAttributesException | ItemWithIncorrectAttributeException e) {
+		} catch (InvalidFileFormatException e) {
 			e.printStackTrace();
 		}
 
 		System.out.println(dataFrame);
+		System.out.println(dataFrame.getContent().get("Nom").get(1));
 
 //		IQuery<Map<String, String>> query = new StringComparison("Nom", Operator.EQUALS, "Àlex");
 //		System.out.println(dataFrame.query(query));
