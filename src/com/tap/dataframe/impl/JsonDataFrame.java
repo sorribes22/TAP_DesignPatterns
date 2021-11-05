@@ -1,7 +1,7 @@
 package com.tap.dataframe.impl;
 
 import com.tap.dataframe.DataFrame;
-import com.tap.dataframe.ItemWithIncorrectNumberOfAttributesException;
+import com.tap.dataframe.exception.ItemWithIncorrectNumberOfAttributesException;
 
 import java.util.Scanner;
 

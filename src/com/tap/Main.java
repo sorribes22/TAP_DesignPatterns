@@ -1,8 +1,11 @@
 package com.tap;
 
 import com.tap.dataframe.DataFrame;
-import com.tap.dataframe.ItemWithIncorrectNumberOfAttributesException;
+import com.tap.dataframe.exception.InvalidFileFormatException;
+import com.tap.dataframe.exception.InvalidFormatException;
+import com.tap.dataframe.exception.ItemWithIncorrectNumberOfAttributesException;
 import com.tap.dataframe.impl.CsvDataFrame;
+import com.tap.dataframe.impl.TxtDataFrame;
 import com.tap.dataframe.query.IQuery;
 import com.tap.dataframe.query.Operator;
 import com.tap.dataframe.query.StringComparison;
@@ -23,20 +26,22 @@ public class Main {
 	private static DataFrame dataFrame;
 
 	public static void main(String[] args) {
-		String filename = "files/Prova.csv";
+		String filename = "files/TextFrame.txt";
 
 		//DataFrameFactory factory = new DataFrameFactory(filename);
 		openFile(filename);
 
 		try {
-			dataFrame = new CsvDataFrame();
+			dataFrame = new TxtDataFrame();
 			dataFrame.loadContent(file);
-		} catch (ItemWithIncorrectNumberOfAttributesException e) {
+		} catch (InvalidFileFormatException e) {
 			e.printStackTrace();
 		}
 
 		System.out.println(dataFrame);
+		System.out.println(dataFrame.getContent().get("Nom").get(1));
 
+		/*
 		IQuery<Map<String, String>> query = new StringComparison("Nom", Operator.EQUALS, "Àlex");
 		System.out.println(dataFrame.query(query));
 
@@ -45,6 +50,8 @@ public class Main {
 
 		Comparator<String> comparator2 = new NumberDescending();
 		System.out.println(dataFrame.sort("Altura", comparator2));
+		*/
+
 	}
 
 	/**
