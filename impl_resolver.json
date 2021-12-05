@@ -1,0 +1,7 @@
+{
+  "extension_factories": {
+    "csv": "com.tap.dataframe.factory.CsvDataFrameFactory",
+    "json": "com.tap.dataframe.factory.JsonDataFrameFactory",
+    "txt": "com.tap.dataframe.factory.TxtDataFrameFactory"
+  }
+}

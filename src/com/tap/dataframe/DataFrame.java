@@ -24,7 +24,7 @@ public abstract class DataFrame implements Iterable<Map<String, String>> {
      */
     protected Map<String, List<String>> content = new LinkedHashMap<>();
 
-    public abstract void loadContent(Scanner scanner) throws  InvalidFileFormatException;
+    public abstract void loadContent(Scanner scanner) throws InvalidFileFormatException;
 
     /**
      * Returns the value from specific attribute item.
@@ -63,7 +63,7 @@ public abstract class DataFrame implements Iterable<Map<String, String>> {
     }
 
 	public List<String> sort(String column, Comparator<String> comparator) {
-        // TODO si content.get(column) retorna null, retornar una llista buidae
+        // TODO si content.get(column) retorna null, retornar una llista buida
 		return content.get(column).stream().sorted(comparator).collect(Collectors.toList());
 	}
 

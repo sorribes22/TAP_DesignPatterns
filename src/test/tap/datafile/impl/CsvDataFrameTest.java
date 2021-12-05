@@ -74,29 +74,6 @@ public class CsvDataFrameTest {
 		assertEquals("Item #1 expected to be 3 attributes long. Found 4", exception.getMessage());
 	}
 
-	@Test
-	@DisplayName("Can sort column")
-	void testCanSortColumn() {
-		String fileContent = """
-			Name;"Number of pages";Editorial
-			"Design patterns";364;Pearson
-			"Clean architecture";320;Anaya
-			""";
-
-		dataFrame = new CsvDataFrameFactory().makeDataFrame();
-		try {
-			dataFrame.loadContent(fakeScanner(fileContent));
-		} catch (InvalidFileFormatException e) {
-			fail();
-		}
-
-		Comparator<String> comparator = new NumberAscending();
-		List<String> result = dataFrame.sort("Number of pages", comparator);
-
-		assert result.get(0).equals("320");
-		assert result.get(1).equals("364");
-	}
-
 	/**
 	 * @param fileContent content of the file to mock
 	 * @return mocked scanner

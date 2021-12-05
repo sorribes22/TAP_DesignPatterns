@@ -28,22 +28,6 @@ public class JsonDataFrame extends DataFrame {
 		JsonObject item;
 		boolean firstRow = true;
 
-//		for (int i = 0; i < jsonArray.size(); i++) {
-//			item = jsonArray.get(i).getAsJsonObject();
-//
-//			if (i == 0) {
-//				labels.addAll(item.keySet());
-//
-//				for (int j = 0; j < labels.size(); j++) {
-//					this.content.put(labels.get(i), new ArrayList<>());
-//				}
-//			}
-//
-//			for (String label : item.keySet()) {
-//				this.content.get(label).add(String.valueOf(item.get(label)));
-//			}
-//		}
-
 		for (JsonElement i : jsonArray) {
 			item = i.getAsJsonObject();
 
