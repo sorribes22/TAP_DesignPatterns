@@ -3,6 +3,7 @@ package com.tap.dataframe.factory;
 
 import com.tap.dataframe.DataFrame;
 import com.tap.dataframe.ImplResolver;
+import com.tap.dataframe.exception.InvalidFileFormatException;
 import com.tap.dataframe.exception.ItemWithIncorrectNumberOfAttributesException;
 import com.tap.dataframe.impl.CsvDataFrame;
 import com.tap.dataframe.impl.DirectoryDataFrame;
@@ -12,6 +13,7 @@ import java.io.FileNotFoundException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -21,7 +23,6 @@ public class DirectoryDataFrameFactory implements DataFrameFactory {
 	private ImplResolver implResolver = new ImplResolver();
 
 	/**
-	 *
 	 * @param filePointer Directory pointer
 	 */
 	public DirectoryDataFrameFactory(File filePointer) {
@@ -29,53 +30,57 @@ public class DirectoryDataFrameFactory implements DataFrameFactory {
 	}
 
 	public DataFrame makeDataFrame() {
-		return loadDirectory(filePointer, new DirectoryDataFrame());
+		DirectoryDataFrame root = new DirectoryDataFrame();
+
+		loadDirectory(filePointer, root);
+
+		return root;
 	}
 
 	/**
 	 * Expected to be called on a directory, not on a file
-	 * @param directory
+	 *
 	 * @return
 	 */
-	public DataFrame loadDirectory(File pointer, DirectoryDataFrame root) {
-		DataFrame directory = new DirectoryDataFrame();
-
+	public void loadDirectory(File pointer, DirectoryDataFrame root) {
 		for (File item : pointer.listFiles()) {
-			if (pointer.isDirectory()) {
-				root.add(loadDirectory(item, root));
+			System.out.println(item.getName());
+			if (item.isDirectory()) {
+				DirectoryDataFrame directory = new DirectoryDataFrame();
+				loadDirectory(item, directory);
+				root.add(directory);
 			} else {
 				String extension = fileExtension(item.getName());
 				try {
-					Class<?> factoryImpl = Class.forName(implResolver.factoryFromExtension(extension));
+					String factoryNamespace = implResolver.factoryFromExtension(extension);
+					if (factoryNamespace == null) continue;
+
+					Class<?> factoryImpl = Class.forName(factoryNamespace);
 					Method method = factoryImpl.getDeclaredMethod("makeDataFrame");
 					Object object = method.invoke(factoryImpl.newInstance());
 					DataFrame dataFrame = (DataFrame) object;
 
-					root.add(dataFrame.loadContent(item));
+					Scanner scanner = new Scanner(item);
+					dataFrame.loadContent(scanner);
+
+					root.add(dataFrame);
 				} catch (ClassNotFoundException e) {
 					System.out.format("Could not resolve file extension: '%s'\n", extension);
-				} catch (ItemWithIncorrectNumberOfAttributesException e) {
+				} catch (InvalidFileFormatException e) {
+					System.out.println(e.getMessage());
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					e.printStackTrace();
+				} catch (NoSuchMethodException e) {
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				} catch (InstantiationException e) {
 					e.printStackTrace();
 				}
 			}
 		}
-
-		return directory;
-	}
-
-	/**
-	 * @param filename
-	 * @author https://www.w3schools.com/java/java_files_read.asp
-	 */
-	private static Scanner openFile(String filename) {
-		File pointer = new File(filename);
-		try {
-			file = new Scanner(pointer);
-		} catch (FileNotFoundException e) {
-			// TODO
-			e.printStackTrace();
-		}
-		// TODO raise exception if .exists() or .canRead() returns false
 	}
 
 	/**
