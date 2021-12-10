@@ -1,18 +1,11 @@
 package com.tap;
 
 import com.tap.dataframe.DataFrame;
-import com.tap.dataframe.exception.InvalidFileFormatException;
-import com.tap.dataframe.exception.ItemWithIncorrectAttributeException;
 import com.tap.dataframe.exception.ItemWithIncorrectNumberOfAttributesException;
 import com.tap.dataframe.factory.DataFrameFactory;
 import com.tap.dataframe.factory.DirectoryDataFrameFactory;
-import com.tap.dataframe.impl.DirectoryDataFrame;
-import com.tap.dataframe.impl.JsonDataFrame;
-import com.tap.dataframe.impl.TxtDataFrame;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Optional;
 import java.util.Scanner;
 
 public class Main {
@@ -80,34 +73,5 @@ public class Main {
 		} catch (ItemWithIncorrectNumberOfAttributesException e) {
 			e.printStackTrace();
 		}
-	}
-
-	/**
-	 * @param filename
-	 * @author https://www.w3schools.com/java/java_files_read.asp
-	 */
-	private static void openFile(String filename) {
-		File pointer = new File(filename);
-		try {
-			file = new Scanner(pointer);
-		} catch (FileNotFoundException e) {
-			// TODO
-			e.printStackTrace();
-		}
-		// TODO raise exception if .exists() or .canRead() returns false
-	}
-
-	/**
-	 *
-	 *
-	 * @param filename Name of the file
-	 * @return File extension
-	 * @author https://frontbackend.com/java/how-to-get-extension-of-a-file-in-java
-	 */
-	private static String fileExtension(String filename) {
-		return Optional.of(filename)
-			.filter(f -> f.contains("."))
-			.map(f -> f.substring(filename.lastIndexOf(".") + 1))
-			.orElse("");
 	}
 }

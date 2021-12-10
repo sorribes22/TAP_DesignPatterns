@@ -1,7 +1,5 @@
 package com.tap.dataframe;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -12,7 +10,9 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class ImplResolver {
-	static final String filePath = "impl_resolver.json";
+	static final String FILE_PATH = "impl_resolver.json";
+
+	private static final String EXTENSION_FACTORY_SECTION = "extension_factories";
 
 	private Map<String, String> map = new HashMap<>();
 
@@ -22,6 +22,9 @@ public class ImplResolver {
 		this.reload();
 	}
 
+	/**
+	 * Refresh map implementation from FILE_PATH file.
+	 */
 	public void reload() {
 		openFile();
 
@@ -30,20 +33,31 @@ public class ImplResolver {
 		scanner.close();
 	}
 
+	/**
+	 * Resolve map implementation based on file extension.
+	 * @param extension file extension
+	 * @return namespace from factory implementation
+	 */
 	public String factoryFromExtension(String extension) {
 		return map.get(extension);
 	}
 
+	/**
+	 * Initializes scanner to FILE_PATH file.
+	 */
 	private void openFile() {
-		File pointer = new File(filePath);
+		File pointer = new File(FILE_PATH);
 
 		try {
 			scanner = new Scanner(pointer);
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			System.out.format("File %s not found.\n", FILE_PATH);
 		}
 	}
 
+	/**
+	 *
+	 */
 	private void read() {
 		StringBuilder content = new StringBuilder();
 
@@ -52,7 +66,7 @@ public class ImplResolver {
 		}
 
 		JsonObject root = JsonParser.parseString(content.toString()).getAsJsonObject();
-		JsonObject relations = root.getAsJsonObject("extension_factories");
+		JsonObject relations = root.getAsJsonObject(EXTENSION_FACTORY_SECTION);
 
 		for (String key : relations.keySet()) {
 			map.put(key, relations.get(key).getAsString());

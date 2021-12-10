@@ -4,16 +4,12 @@ package com.tap.dataframe.factory;
 import com.tap.dataframe.DataFrame;
 import com.tap.dataframe.ImplResolver;
 import com.tap.dataframe.exception.InvalidFileFormatException;
-import com.tap.dataframe.exception.ItemWithIncorrectNumberOfAttributesException;
-import com.tap.dataframe.impl.CsvDataFrame;
 import com.tap.dataframe.impl.DirectoryDataFrame;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -44,7 +40,6 @@ public class DirectoryDataFrameFactory implements DataFrameFactory {
 	 */
 	public void loadDirectory(File pointer, DirectoryDataFrame root) {
 		for (File item : pointer.listFiles()) {
-			System.out.println(item.getName());
 			if (item.isDirectory()) {
 				DirectoryDataFrame directory = new DirectoryDataFrame();
 				loadDirectory(item, directory);
@@ -57,7 +52,7 @@ public class DirectoryDataFrameFactory implements DataFrameFactory {
 
 					Class<?> factoryImpl = Class.forName(factoryNamespace);
 					Method method = factoryImpl.getDeclaredMethod("makeDataFrame");
-					Object object = method.invoke(factoryImpl.newInstance());
+					Object object = method.invoke(factoryImpl.getDeclaredConstructor().newInstance());
 					DataFrame dataFrame = (DataFrame) object;
 
 					Scanner scanner = new Scanner(item);
