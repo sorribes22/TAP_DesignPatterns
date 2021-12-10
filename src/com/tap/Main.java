@@ -1,11 +1,13 @@
 package com.tap;
 
 import com.tap.dataframe.DataFrame;
+import com.tap.dataframe.exception.InvalidFileFormatException;
 import com.tap.dataframe.exception.ItemWithIncorrectNumberOfAttributesException;
 import com.tap.dataframe.factory.DataFrameFactory;
 import com.tap.dataframe.factory.DirectoryDataFrameFactory;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Main {
@@ -64,13 +66,18 @@ public class Main {
 
 		String directory = "./files";
 		File directoryPointer = new File(directory);
-		DataFrameFactory factory = new DirectoryDataFrameFactory(directoryPointer);
+		DataFrameFactory factory = new DirectoryDataFrameFactory();
 
 		try {
 			DataFrame directoryDF = factory.makeDataFrame();
+			directoryDF.loadContent(directoryPointer);
 
 			System.out.println("hola");
 		} catch (ItemWithIncorrectNumberOfAttributesException e) {
+			e.printStackTrace();
+		} catch (InvalidFileFormatException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 	}

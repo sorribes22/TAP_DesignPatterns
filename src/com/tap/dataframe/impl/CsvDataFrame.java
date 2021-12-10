@@ -3,6 +3,8 @@ package com.tap.dataframe.impl;
 import com.tap.dataframe.DataFrame;
 import com.tap.dataframe.exception.ItemWithIncorrectNumberOfAttributesException;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -18,7 +20,8 @@ public class CsvDataFrame extends DataFrame {
 		this.delimiter = delimiter;
 	}
 
-	public void loadContent(Scanner scanner) throws ItemWithIncorrectNumberOfAttributesException {
+	public void loadContent(File file) throws ItemWithIncorrectNumberOfAttributesException, FileNotFoundException {
+		Scanner scanner = new Scanner(file);
 		int labelIndex = 0;
 
 		while (scanner.hasNextLine()) {

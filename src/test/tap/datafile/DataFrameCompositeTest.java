@@ -22,27 +22,27 @@ public class DataFrameCompositeTest {
 //
 //	}
 	// TODO fer test més genèric. No de una implementació
-	@Test
-	@DisplayName("Can sort column")
-	void testCanSortColumn() {
-		String fileContent = """
-			Name;"Number of pages";Editorial
-			"Design patterns";364;Pearson
-			"Clean architecture";320;Anaya
-			""";
-
-		dataFrame = new CsvDataFrameFactory().makeDataFrame();
-		try {
-			dataFrame.loadContent(fakeScanner(fileContent));
-		} catch (InvalidFileFormatException e) {
-			fail();
-		}
-
-		List<String> result = dataFrame.sort("Number of pages", new NumberAscending());
-
-		assert result.get(0).equals("320");
-		assert result.get(1).equals("364");
-	}
+//	@Test
+//	@DisplayName("Can sort column")
+//	void testCanSortColumn() {
+//		String fileContent = """
+//			Name;"Number of pages";Editorial
+//			"Design patterns";364;Pearson
+//			"Clean architecture";320;Anaya
+//			""";
+//
+//		dataFrame = new CsvDataFrameFactory().makeDataFrame();
+//		try {
+//			dataFrame.loadContent(fakeScanner(fileContent));
+//		} catch (InvalidFileFormatException e) {
+//			fail();
+//		}
+//
+//		List<String> result = dataFrame.sort("Number of pages", new NumberAscending());
+//
+//		assert result.get(0).equals("320");
+//		assert result.get(1).equals("364");
+//	}
 
 	/**
 	 * @param fileContent content of the file to mock

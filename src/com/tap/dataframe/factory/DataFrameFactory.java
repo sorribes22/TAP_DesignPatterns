@@ -5,8 +5,7 @@ import com.tap.dataframe.exception.ItemWithIncorrectNumberOfAttributesException;
 
 public interface DataFrameFactory {
 
-    DataFrame makeDataFrame () throws ItemWithIncorrectNumberOfAttributesException;
-
+	DataFrame makeDataFrame() throws ItemWithIncorrectNumberOfAttributesException;
 
 
 }

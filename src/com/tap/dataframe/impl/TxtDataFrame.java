@@ -5,6 +5,8 @@ import com.tap.dataframe.exception.InvalidFileFormatException;
 import com.tap.dataframe.exception.ItemWithIncorrectNumberOfAttributesException;
 import com.tap.dataframe.exception.InvalidFormatException;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -18,12 +20,13 @@ public class TxtDataFrame extends DataFrame {
 
 	}
 
-	public void loadContent(Scanner file) throws InvalidFileFormatException {
+	public void loadContent(File file) throws InvalidFileFormatException, FileNotFoundException {
+		Scanner scanner = new Scanner(file);
 		String splitRow1[];
 		String splitRow2[];
 		String row;
-		while (file.hasNextLine()) {
-			row = file.nextLine();
+		while (scanner.hasNextLine()) {
+			row = scanner.nextLine();
 			if (row.matches(REGEX)) {
 				splitRow1 = row.split(":");
 				labels.add(splitRow1[0]);

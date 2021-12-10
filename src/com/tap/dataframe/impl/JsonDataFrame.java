@@ -7,6 +7,8 @@ import com.google.gson.JsonParser;
 import com.tap.dataframe.DataFrame;
 import com.tap.dataframe.exception.*;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -17,8 +19,9 @@ public class JsonDataFrame extends DataFrame {
 	}
 
 	@Override
-	public void loadContent(Scanner scanner) throws ItemWithIncorrectNumberOfAttributesException, ItemWithIncorrectAttributeException {
+	public void loadContent(File file) throws ItemWithIncorrectNumberOfAttributesException, ItemWithIncorrectAttributeException, FileNotFoundException {
 		StringBuilder content = new StringBuilder();
+		Scanner scanner = new Scanner(file);
 
 		while (scanner.hasNextLine()) {
 			content.append(scanner.nextLine());

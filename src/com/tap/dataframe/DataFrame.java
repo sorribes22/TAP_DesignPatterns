@@ -1,10 +1,10 @@
 package com.tap.dataframe;
 
 import com.tap.dataframe.exception.InvalidFileFormatException;
-import com.tap.dataframe.exception.ItemWithIncorrectAttributeException;
-import com.tap.dataframe.exception.ItemWithIncorrectNumberOfAttributesException;
 import com.tap.dataframe.query.IQuery;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -24,7 +24,7 @@ public abstract class DataFrame implements Iterable<Map<String, String>> {
      */
     protected Map<String, List<String>> content = new LinkedHashMap<>();
 
-    public abstract void loadContent(Scanner scanner) throws InvalidFileFormatException;
+    public abstract void loadContent(File file) throws InvalidFileFormatException, FileNotFoundException;
 
     /**
      * Returns the value from specific attribute item.
