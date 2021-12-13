@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public abstract class DataFrame implements Iterable<Map<String, String>> {
+public abstract class DataFrame implements StringDataFrame {
     /**
      * Number of items loaded
      */
@@ -24,8 +24,6 @@ public abstract class DataFrame implements Iterable<Map<String, String>> {
      */
     protected Map<String, List<String>> content = new LinkedHashMap<>();
 
-    public abstract void loadContent(File file) throws InvalidFileFormatException, FileNotFoundException;
-
     /**
      * Returns the value from specific attribute item.
      *
@@ -33,6 +31,7 @@ public abstract class DataFrame implements Iterable<Map<String, String>> {
      * @param label column
      * @return value of a row and column
      */
+    @Override
     public Object at(int row, String label) {
         return content.get(label).get(row);
     }
@@ -44,6 +43,7 @@ public abstract class DataFrame implements Iterable<Map<String, String>> {
      * @param column attribute to retrieve
      * @return value of a row and column
      */
+    @Override
     public Object iat(int row, int column) {
         return content.get(labels.get(column)).get(row);
     }
@@ -51,6 +51,7 @@ public abstract class DataFrame implements Iterable<Map<String, String>> {
     /**
      * @return number of labels
      */
+    @Override
     public int columns() {
         return labels.size();
     }
@@ -58,16 +59,19 @@ public abstract class DataFrame implements Iterable<Map<String, String>> {
     /**
      * @return number of items
      */
+    @Override
     public int size() {
         return size;
     }
 
-	public List<String> sort(String column, Comparator<String> comparator) {
+	@Override
+    public List<String> sort(String column, Comparator<String> comparator) {
         // TODO si content.get(column) retorna null, retornar una llista buida
 		return content.get(column).stream().sorted(comparator).collect(Collectors.toList());
 	}
 
-	public Map<String, List<String>> query(IQuery<Map<String, String>> condition) {
+	@Override
+    public Map<String, List<String>> query(IQuery<Map<String, String>> condition) {
         Map<String, List<String>> result = new HashMap<>();
         for (String label : labels) result.put(label, new ArrayList<>());
 
@@ -82,6 +86,7 @@ public abstract class DataFrame implements Iterable<Map<String, String>> {
         return result;
 	}
 
+    @Override
     public Map<String, List<String>> getContent() {
         return content;
     }
