@@ -1,6 +1,8 @@
 package com.tap;
 
 import com.tap.dataframe.DataFrame;
+import com.tap.dataframe.StringDataFrame;
+import com.tap.handler.LoggingHandler;
 import com.tap.dataframe.exception.InvalidFileFormatException;
 import com.tap.dataframe.exception.ItemWithIncorrectNumberOfAttributesException;
 import com.tap.dataframe.factory.DataFrameFactory;
@@ -8,6 +10,7 @@ import com.tap.dataframe.factory.DirectoryDataFrameFactory;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.lang.reflect.Proxy;
 import java.util.Scanner;
 
 public class Main {
@@ -69,7 +72,7 @@ public class Main {
 		DataFrameFactory factory = new DirectoryDataFrameFactory();
 
 		try {
-			DataFrame directoryDF = factory.makeDataFrame();
+			StringDataFrame directoryDF = withLogging(factory.makeDataFrame(), StringDataFrame.class);
 			directoryDF.loadContent(directoryPointer);
 
 			System.out.println("hola");
@@ -80,5 +83,15 @@ public class Main {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+
+	// https://www.youtube.com/watch?v=T3VucYqdoRo&ab_channel=ChristopherOkhravi
+	@SuppressWarnings("unchecked")
+	private static <T> T withLogging(T target, Class<T> itf) {
+		return (T) Proxy.newProxyInstance(
+			itf.getClassLoader(),
+			new Class<?>[] {itf},
+			new LoggingHandler(target)
+		);
 	}
 }
