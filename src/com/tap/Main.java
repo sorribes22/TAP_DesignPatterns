@@ -2,11 +2,14 @@ package com.tap;
 
 import com.tap.dataframe.DataFrame;
 import com.tap.dataframe.StringDataFrame;
+import com.tap.dataframe.query.Operator;
+import com.tap.dataframe.query.StringComparison;
 import com.tap.handler.LoggingHandler;
 import com.tap.dataframe.exception.InvalidFileFormatException;
 import com.tap.dataframe.exception.ItemWithIncorrectNumberOfAttributesException;
 import com.tap.dataframe.factory.DataFrameFactory;
 import com.tap.dataframe.factory.DirectoryDataFrameFactory;
+import com.tap.handler.PedroSearchHandler;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -72,9 +75,10 @@ public class Main {
 		DataFrameFactory factory = new DirectoryDataFrameFactory();
 
 		try {
-			StringDataFrame directoryDF = withLogging(factory.makeDataFrame(), StringDataFrame.class);
+//			StringDataFrame directoryDF = withLogging(factory.makeDataFrame(), StringDataFrame.class);
+			StringDataFrame directoryDF = whosSearchingForPedro(factory.makeDataFrame(), StringDataFrame.class);
 			directoryDF.loadContent(directoryPointer);
-
+			directoryDF.query(new StringComparison("user", Operator.EQUALS, "pedro"));
 			System.out.println("hola");
 		} catch (ItemWithIncorrectNumberOfAttributesException e) {
 			e.printStackTrace();
@@ -92,6 +96,16 @@ public class Main {
 			itf.getClassLoader(),
 			new Class<?>[] {itf},
 			new LoggingHandler(target)
+		);
+	}
+
+	// https://www.youtube.com/watch?v=T3VucYqdoRo&ab_channel=ChristopherOkhravi
+	@SuppressWarnings("unchecked")
+	private static <T> T whosSearchingForPedro(T target, Class<T> itf) {
+		return (T) Proxy.newProxyInstance(
+			itf.getClassLoader(),
+			new Class<?>[] {itf},
+			new PedroSearchHandler(target)
 		);
 	}
 }

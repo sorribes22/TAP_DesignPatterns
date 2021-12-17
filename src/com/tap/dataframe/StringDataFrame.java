@@ -1,7 +1,7 @@
 package com.tap.dataframe;
 
 import com.tap.dataframe.exception.InvalidFileFormatException;
-import com.tap.dataframe.query.IQuery;
+import com.tap.dataframe.query.Query;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -22,7 +22,7 @@ public interface StringDataFrame extends Iterable<Map<String, String>> {
 
 	List<String> sort(String column, Comparator<String> comparator);
 
-	Map<String, List<String>> query(IQuery<Map<String, String>> condition);
+	Map<String, List<String>> query(Query<Map<String, String>> condition);
 
 	Map<String, List<String>> getContent();
 }

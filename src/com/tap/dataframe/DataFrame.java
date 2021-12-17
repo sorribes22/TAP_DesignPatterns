@@ -1,10 +1,7 @@
 package com.tap.dataframe;
 
-import com.tap.dataframe.exception.InvalidFileFormatException;
-import com.tap.dataframe.query.IQuery;
+import com.tap.dataframe.query.Query;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -71,7 +68,7 @@ public abstract class DataFrame implements StringDataFrame {
 	}
 
 	@Override
-    public Map<String, List<String>> query(IQuery<Map<String, String>> condition) {
+    public Map<String, List<String>> query(Query<Map<String, String>> condition) {
         Map<String, List<String>> result = new HashMap<>();
         for (String label : labels) result.put(label, new ArrayList<>());
 
