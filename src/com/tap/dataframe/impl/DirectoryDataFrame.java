@@ -7,7 +7,6 @@ import com.tap.dataframe.visitor.DataFrameVisitor;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -54,14 +53,9 @@ public class DirectoryDataFrame extends DataFrame {
 				} catch (InvalidFileFormatException e) {
 					System.out.println(e.getMessage());
 				} catch (FileNotFoundException e) {
+					// todo enhancement
 					e.printStackTrace();
-				} catch (InvocationTargetException e) {
-					e.printStackTrace();
-				} catch (NoSuchMethodException e) {
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
-					e.printStackTrace();
-				} catch (InstantiationException e) {
+				} catch (ReflectiveOperationException e) {
 					e.printStackTrace();
 				}
 			}
