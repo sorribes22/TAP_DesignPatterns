@@ -13,7 +13,7 @@ public class CsvDataFrame extends DataFrame {
 	private String delimiter;
 
 	public CsvDataFrame() {
-		this(";");
+		this(",");
 	}
 
 	public CsvDataFrame(String delimiter) {

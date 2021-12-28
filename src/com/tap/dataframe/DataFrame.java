@@ -2,6 +2,7 @@ package com.tap.dataframe;
 
 import com.tap.dataframe.exception.InvalidFileFormatException;
 import com.tap.dataframe.query.IQuery;
+import com.tap.dataframe.visitor.DataFrameVisitor;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -125,7 +126,6 @@ public abstract class DataFrame implements Iterable<Map<String, String>> {
         return retu;
            }
     */
-
     public Iterator<Map<String, String>> iterator() {
         return new Iterator<>() {
 
@@ -154,5 +154,9 @@ public abstract class DataFrame implements Iterable<Map<String, String>> {
                 throw new UnsupportedOperationException();
             }
         };
+    }
+
+    public void accept(DataFrameVisitor visitor){
+        visitor.visit(this);
     }
 }

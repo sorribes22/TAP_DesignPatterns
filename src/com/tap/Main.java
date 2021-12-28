@@ -5,6 +5,7 @@ import com.tap.dataframe.exception.InvalidFileFormatException;
 import com.tap.dataframe.exception.ItemWithIncorrectNumberOfAttributesException;
 import com.tap.dataframe.factory.DataFrameFactory;
 import com.tap.dataframe.factory.DirectoryDataFrameFactory;
+import com.tap.dataframe.visitor.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -72,7 +73,10 @@ public class Main {
 			DataFrame directoryDF = factory.makeDataFrame();
 			directoryDF.loadContent(directoryPointer);
 
-			System.out.println("hola");
+			DataFrameVisitor v = new AverageVisitor();
+			directoryDF.accept(v);
+			System.out.println("El result es: "+v.getResult());
+
 		} catch (ItemWithIncorrectNumberOfAttributesException e) {
 			e.printStackTrace();
 		} catch (InvalidFileFormatException e) {
@@ -80,5 +84,7 @@ public class Main {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+
+
 	}
 }

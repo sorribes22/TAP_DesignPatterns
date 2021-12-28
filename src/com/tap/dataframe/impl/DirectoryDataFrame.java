@@ -3,6 +3,7 @@ package com.tap.dataframe.impl;
 import com.tap.dataframe.DataFrame;
 import com.tap.dataframe.ImplResolver;
 import com.tap.dataframe.exception.InvalidFileFormatException;
+import com.tap.dataframe.visitor.DataFrameVisitor;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -88,5 +89,14 @@ public class DirectoryDataFrame extends DataFrame {
 			.filter(f -> f.contains("."))
 			.map(f -> f.substring(filename.lastIndexOf(".") + 1))
 			.orElse("");
+	}
+
+	public void accept(DataFrameVisitor v){
+		v.visitDirectory(this);
+
+	}
+
+	public ArrayList<DataFrame> getChildrens() {
+		return childrens;
 	}
 }
