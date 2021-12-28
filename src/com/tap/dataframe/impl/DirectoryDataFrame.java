@@ -10,6 +10,8 @@ import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class DirectoryDataFrame extends DataFrame {
@@ -86,17 +88,28 @@ public class DirectoryDataFrame extends DataFrame {
 	 */
 	private static String fileExtension(String filename) {
 		return Optional.of(filename)
-			.filter(f -> f.contains("."))
-			.map(f -> f.substring(filename.lastIndexOf(".") + 1))
-			.orElse("");
+				.filter(f -> f.contains("."))
+				.map(f -> f.substring(filename.lastIndexOf(".") + 1))
+				.orElse("");
 	}
 
-	public void accept(DataFrameVisitor v){
+	public void accept(DataFrameVisitor v) {
 		v.visitDirectory(this);
 
 	}
 
 	public ArrayList<DataFrame> getChildrens() {
 		return childrens;
+	}
+
+	public Map<String, List<String>>  getContent() {
+
+		childrens.
+	}
+
+	public String at(int row, String label) {
+
+		this.iterator()
+
 	}
 }

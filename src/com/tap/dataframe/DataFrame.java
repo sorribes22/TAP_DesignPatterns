@@ -34,7 +34,7 @@ public abstract class DataFrame implements Iterable<Map<String, String>> {
      * @param label column
      * @return value of a row and column
      */
-    public Object at(int row, String label) {
+    public String  at(int row, String label) {
         return content.get(label).get(row);
     }
 
@@ -45,7 +45,7 @@ public abstract class DataFrame implements Iterable<Map<String, String>> {
      * @param column attribute to retrieve
      * @return value of a row and column
      */
-    public Object iat(int row, int column) {
+    public String iat(int row, int column) {
         return content.get(labels.get(column)).get(row);
     }
 
@@ -141,7 +141,7 @@ public abstract class DataFrame implements Iterable<Map<String, String>> {
                 Map<String, String> row = new HashMap<>();
 
                 for (String label : labels) {
-                    row.put(label, content.get(label).get(currentIndex));
+                    row.put(label, getContent().get(label).get(currentIndex));
                 }
 
                 currentIndex++;
