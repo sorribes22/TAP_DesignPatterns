@@ -9,6 +9,7 @@ import com.tap.dataframe.exception.InvalidFileFormatException;
 import com.tap.dataframe.exception.ItemWithIncorrectNumberOfAttributesException;
 import com.tap.dataframe.factory.DataFrameFactory;
 import com.tap.dataframe.factory.DirectoryDataFrameFactory;
+import com.tap.handler.Observer;
 import com.tap.handler.PedroSearchHandler;
 
 import java.io.File;
@@ -76,7 +77,9 @@ public class Main {
 
 		try {
 //			StringDataFrame directoryDF = withLogging(factory.makeDataFrame(), StringDataFrame.class);
-			StringDataFrame directoryDF = whosSearchingForPedro(factory.makeDataFrame(), StringDataFrame.class);
+//			StringDataFrame directoryDF = whosSearchingForPedro(factory.makeDataFrame(), StringDataFrame.class);
+			StringDataFrame directoryDF = Observer.watch(factory.makeDataFrame(), StringDataFrame.class);
+			directoryDF.listenFor("query", new PedroSearchHandler(target));
 			directoryDF.loadContent(directoryPointer);
 			directoryDF.query(new StringComparison("user", Operator.EQUALS, "pedro"));
 			System.out.println("hola");
@@ -91,21 +94,31 @@ public class Main {
 
 	// https://www.youtube.com/watch?v=T3VucYqdoRo&ab_channel=ChristopherOkhravi
 	@SuppressWarnings("unchecked")
-	private static <T> T withLogging(T target, Class<T> itf) {
+	private static <T> T initObserver(T target, Class<T> itf) {
 		return (T) Proxy.newProxyInstance(
 			itf.getClassLoader(),
 			new Class<?>[] {itf},
-			new LoggingHandler(target)
+			new Observer(target)
 		);
 	}
 
-	// https://www.youtube.com/watch?v=T3VucYqdoRo&ab_channel=ChristopherOkhravi
-	@SuppressWarnings("unchecked")
-	private static <T> T whosSearchingForPedro(T target, Class<T> itf) {
-		return (T) Proxy.newProxyInstance(
-			itf.getClassLoader(),
-			new Class<?>[] {itf},
-			new PedroSearchHandler(target)
-		);
-	}
+//	// https://www.youtube.com/watch?v=T3VucYqdoRo&ab_channel=ChristopherOkhravi
+//	@SuppressWarnings("unchecked")
+//	private static <T> T withLogging(T target, Class<T> itf) {
+//		return (T) Proxy.newProxyInstance(
+//			itf.getClassLoader(),
+//			new Class<?>[] {itf},
+//			new LoggingHandler(target)
+//		);
+//	}
+//
+//	// https://www.youtube.com/watch?v=T3VucYqdoRo&ab_channel=ChristopherOkhravi
+//	@SuppressWarnings("unchecked")
+//	private static <T> T whosSearchingForPedro(T target, Class<T> itf) {
+//		return (T) Proxy.newProxyInstance(
+//			itf.getClassLoader(),
+//			new Class<?>[] {itf},
+//			new PedroSearchHandler(target)
+//		);
+//	}
 }
