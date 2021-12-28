@@ -1,24 +1,17 @@
 package com.tap.dataframe.query;
 
 import java.util.Map;
+import java.util.Objects;
 
-public class StringComparison implements IQuery<Map<String, String>> {
-
-	private String attribute;
-
-	private Operator operator;
-
-	private String match;
+public class StringComparison extends Query<Map<String, String>> {
 
 	public StringComparison(String attribute, Operator operator, String match) {
-		this.attribute = attribute;
-		this.operator = operator;
-		this.match = match;
+		super(attribute, operator, match);
 	}
 
 	@Override
 	public boolean fulfill(Map<String, String> item) {
-		String value = item.get(attribute);
+		String value = item.get(this.attribute);
 
 		return switch (this.operator) {
 			case EQUALS -> value.equals(this.match);
