@@ -97,8 +97,8 @@ public class DirectoryDataFrame extends DataFrame {
     }
 
     public Map<String, List<String>> getContent() {
+    Map<String, List<String>> returnMap = n
 
-        childrens.
     }
 
     public String at(int row, String label) {
