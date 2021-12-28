@@ -2,13 +2,13 @@ package com.tap;
 
 import com.tap.dataframe.DataFrame;
 import com.tap.dataframe.StringDataFrame;
-import com.tap.dataframe.query.Operator;
-import com.tap.dataframe.query.StringComparison;
-import com.tap.handler.LoggingHandler;
 import com.tap.dataframe.exception.InvalidFileFormatException;
 import com.tap.dataframe.exception.ItemWithIncorrectNumberOfAttributesException;
 import com.tap.dataframe.factory.DataFrameFactory;
 import com.tap.dataframe.factory.DirectoryDataFrameFactory;
+import com.tap.dataframe.query.Operator;
+import com.tap.dataframe.query.StringComparison;
+import com.tap.handler.LoggingHandler;
 import com.tap.handler.Observer;
 import com.tap.handler.PedroSearchHandler;
 
@@ -78,8 +78,11 @@ public class Main {
 		try {
 //			StringDataFrame directoryDF = withLogging(factory.makeDataFrame(), StringDataFrame.class);
 //			StringDataFrame directoryDF = whosSearchingForPedro(factory.makeDataFrame(), StringDataFrame.class);
-			StringDataFrame directoryDF = Observer.watch(factory.makeDataFrame(), StringDataFrame.class);
-			directoryDF.listenFor("query", new PedroSearchHandler(target));
+			Observer dataFrameObserver = new Observer(factory.makeDataFrame());
+			dataFrameObserver.listenFor(Observer.ANY, LoggingHandler.class);
+			dataFrameObserver.listenFor("query", PedroSearchHandler.class);
+			StringDataFrame directoryDF = dataFrameObserver.watch(StringDataFrame.class);
+//			directoryDF.listenFor("query", new PedroSearchHandler(target));
 			directoryDF.loadContent(directoryPointer);
 			directoryDF.query(new StringComparison("user", Operator.EQUALS, "pedro"));
 			System.out.println("hola");
