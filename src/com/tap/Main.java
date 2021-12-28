@@ -8,9 +8,9 @@ import com.tap.dataframe.factory.DataFrameFactory;
 import com.tap.dataframe.factory.DirectoryDataFrameFactory;
 import com.tap.dataframe.query.Operator;
 import com.tap.dataframe.query.StringComparison;
-import com.tap.handler.LoggingHandler;
+import com.tap.dataframe.handler.LoggingHandler;
 import com.tap.handler.Observer;
-import com.tap.handler.PedroSearchHandler;
+import com.tap.dataframe.handler.PedroSearchHandler;
 import com.tap.dataframe.visitor.*;
 
 import java.io.File;
