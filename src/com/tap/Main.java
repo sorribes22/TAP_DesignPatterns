@@ -6,16 +6,16 @@ import com.tap.dataframe.exception.InvalidFileFormatException;
 import com.tap.dataframe.exception.ItemWithIncorrectNumberOfAttributesException;
 import com.tap.dataframe.factory.DataFrameFactory;
 import com.tap.dataframe.factory.DirectoryDataFrameFactory;
+import com.tap.dataframe.handler.impl.PedroSearchHandler;
 import com.tap.dataframe.query.Operator;
 import com.tap.dataframe.query.StringComparison;
-import com.tap.dataframe.handler.LoggingHandler;
+import com.tap.dataframe.visitor.AverageVisitor;
+import com.tap.dataframe.visitor.DataFrameVisitor;
 import com.tap.handler.Observer;
-import com.tap.dataframe.handler.PedroSearchHandler;
-import com.tap.dataframe.visitor.*;
+import com.tap.handler.impl.LoggingHandler;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.lang.reflect.Proxy;
 import java.util.Scanner;
 
 public class Main {
@@ -102,34 +102,4 @@ public class Main {
 
 
 	}
-
-	// https://www.youtube.com/watch?v=T3VucYqdoRo&ab_channel=ChristopherOkhravi
-	@SuppressWarnings("unchecked")
-	private static <T> T initObserver(T target, Class<T> itf) {
-		return (T) Proxy.newProxyInstance(
-			itf.getClassLoader(),
-			new Class<?>[] {itf},
-			new Observer(target)
-		);
-	}
-
-//	// https://www.youtube.com/watch?v=T3VucYqdoRo&ab_channel=ChristopherOkhravi
-//	@SuppressWarnings("unchecked")
-//	private static <T> T withLogging(T target, Class<T> itf) {
-//		return (T) Proxy.newProxyInstance(
-//			itf.getClassLoader(),
-//			new Class<?>[] {itf},
-//			new LoggingHandler(target)
-//		);
-//	}
-//
-//	// https://www.youtube.com/watch?v=T3VucYqdoRo&ab_channel=ChristopherOkhravi
-//	@SuppressWarnings("unchecked")
-//	private static <T> T whosSearchingForPedro(T target, Class<T> itf) {
-//		return (T) Proxy.newProxyInstance(
-//			itf.getClassLoader(),
-//			new Class<?>[] {itf},
-//			new PedroSearchHandler(target)
-//		);
-//	}
 }
