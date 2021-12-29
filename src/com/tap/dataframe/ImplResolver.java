@@ -56,7 +56,7 @@ public class ImplResolver {
 	}
 
 	/**
-	 *
+	 * Loads the file filling the map resolver.
 	 */
 	private void read() {
 		StringBuilder content = new StringBuilder();
