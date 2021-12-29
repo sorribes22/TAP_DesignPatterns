@@ -7,5 +7,4 @@ public interface DataFrameFactory {
 
 	DataFrame makeDataFrame() throws ItemWithIncorrectNumberOfAttributesException;
 
-
 }

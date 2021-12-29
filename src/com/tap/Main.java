@@ -6,13 +6,13 @@ import com.tap.dataframe.exception.InvalidFileFormatException;
 import com.tap.dataframe.exception.ItemWithIncorrectNumberOfAttributesException;
 import com.tap.dataframe.factory.DataFrameFactory;
 import com.tap.dataframe.factory.DirectoryDataFrameFactory;
-import com.tap.dataframe.handler.impl.PedroSearchHandler;
+import com.tap.dataframe.observer.impl.PedroSearchHandler;
 import com.tap.dataframe.query.Operator;
 import com.tap.dataframe.query.StringComparison;
 import com.tap.dataframe.visitor.AverageVisitor;
 import com.tap.dataframe.visitor.DataFrameVisitor;
-import com.tap.handler.Observer;
-import com.tap.handler.impl.LoggingHandler;
+import com.tap.observer.Observer;
+import com.tap.observer.impl.LoggingHandler;
 
 import java.io.File;
 import java.io.FileNotFoundException;

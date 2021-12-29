@@ -8,7 +8,18 @@ The goal is to build a DataFrame library using design patterns.
 We chose columnar design to store the data of readen DataFrame because it's the more appropriate to resolve the problem statement.
 
 ## Design patterns
-### Factory
+### Abstract factory
+![](docs/img/abstract-factory.png)
+This creational design pattern lets you create different kind of objects of the same family
+without need to specify their concrete class. In this case we only need to implement one kind of object (**DataFrame**).
+
+Usage example:
+```java
+DataFrameFactory factory = new CsvDataFrameFactory();
+
+DataFrame dataFrame = factory.makeDataFrame();
+```
+
 ### Composite
 ### Visitor
 ### Observer + Dynamic proxy
