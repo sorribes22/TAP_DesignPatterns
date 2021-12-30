@@ -9,8 +9,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 public class DirectoryDataFrame extends DataFrame {
@@ -96,14 +94,20 @@ public class DirectoryDataFrame extends DataFrame {
         return childrens;
     }
 
-    public Map<String, List<String>> getContent() {
-    Map<String, List<String>> returnMap = n
+//    public Map<String, List<String>> getContent() {
+//    Map<String, List<String>> returnMap = n
 
-    }
+//    }
 
     public String at(int row, String label) {
+        int size;
 
-        this.iterator()
+        for (DataFrame children : this.getChildrens()) {
+            size = children.size();
+            if (row > size) row -= size;
+            else return children.at(row, label);
+        }
 
+        return null;
     }
 }

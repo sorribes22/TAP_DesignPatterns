@@ -72,45 +72,10 @@ public abstract class DataFrame implements StringDataFrame {
 		return content;
 	}
 
-	//    @Override
-//    public String toString() {
-//        String output = "DataFrame{" +
-//                "labels=" + labels +
-//                ", content=[\n";
-//
-//        for (Map<String, String> item : this) {
-//            for (String label : item.keySet()) {
-//                output = output.concat("\t".concat(label).concat(": ").concat(item.get(label)));
-//            }
-//
-//            output = output.concat("\n");
-//        }
-//
-//        return output.concat("]}");
-//    }
-
-
-	@Override
-	public String toString() {
-		return "DataFrame{" +
-			"size=" + size +
-			", labels=" + labels +
-			", content=" + content +
-			'}';
+	public void accept(DataFrameVisitor visitor) {
+		visitor.visit(this);
 	}
 
-
-	/* public String toString(){
-		 String retu = "";
-		 for(String columns:labels)
-			retu=retu+columns;
-		 retu = retu + "/n";
-		 for (int i =0;i<labels.size();i++){
-			 content.get(labels.get(i)).get()
-		 }
-		 return retu;
-			}
-	 */
 	public Iterator<Map<String, String>> iterator() {
 		return new Iterator<>() {
 
@@ -141,7 +106,12 @@ public abstract class DataFrame implements StringDataFrame {
 		};
 	}
 
-	public void accept(DataFrameVisitor visitor) {
-		visitor.visit(this);
+	@Override
+	public String toString() {
+		return "DataFrame{" +
+			"size=" + size +
+			", labels=" + labels +
+			", content=" + content +
+			'}';
 	}
 }
