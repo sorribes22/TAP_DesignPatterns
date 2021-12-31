@@ -66,13 +66,6 @@ public class DirectoryDataFrame extends DataFrame {
         childrens.add(children);
     }
 
-    public ArrayList<DataFrame> childrens() {
-        return this.childrens;
-    }
-
-    // TODO Override DataFrame methods
-
-
     /**
      * @param filename Name of the file
      * @return File extension

@@ -60,7 +60,7 @@ public class Observer implements InvocationHandler {
 	/**
 	 * Creates a proxy instance for the target.
 	 *
-	 * @param itf inteface of the method invocations to handle
+	 * @param itf interface of the method invocations to handle
 	 */
 	@SuppressWarnings("unchecked")
 	public <T> T watch(Class<T> itf) {
