@@ -1,4 +1,4 @@
-package com.tap.handler;
+package com.tap.observer;
 
 public abstract class Listener {
 	/**
@@ -11,9 +11,10 @@ public abstract class Listener {
 	}
 
 	/**
-	 * Called every time observed method of target is called.
+	 * Called every time observed method of target is invoked.
+	 *
 	 * @param method method called
-	 * @param args arguments of the method called
+	 * @param args   arguments of the method called
 	 */
 	public abstract void update(String method, Object[] args);
 }

@@ -67,13 +67,6 @@ public class DirectoryDataFrame extends DataFrame {
         childrens.add(children);
     }
 
-    public ArrayList<DataFrame> childrens() {
-        return this.childrens;
-    }
-
-    // TODO Override DataFrame methods
-
-
     /**
      * @param filename Name of the file
      * @return File extension
@@ -95,28 +88,21 @@ public class DirectoryDataFrame extends DataFrame {
         return childrens;
     }
 
+    public Map<String, List<String>> getContent() {
+    Map<String, List<String>> returnMap = n
 
-    /*
+    }
+
     public String at(int row, String label) {
+        int size;
 
-        int size = 0;
-        int i = 0;
-        for (DataFrame df : childrens) {
-            if (!(df instanceof DirectoryDataFrame)) {
-                i = df.getContent().get(label).size();
-                size = size + i;
-                if (size > row) {
-                    size = size - i;
-                    i = row - size;
-                    return df.getContent().get(label).get(i);
-                }
-            } else {
-
-            }
-
+        for (DataFrame children : this.getChildrens()) {
+            size = children.size();
+            if (row > size) row -= size;
+            else return children.at(row, label);
         }
 
-
+        return null;
     }
 */
 

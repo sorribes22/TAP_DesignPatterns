@@ -1,4 +1,4 @@
-package com.tap.handler;
+package com.tap.observer;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -20,6 +20,12 @@ public class Observer implements InvocationHandler {
 		this.target = target;
 	}
 
+	/**
+	 * Adds a listener for a method.
+	 *
+	 * @param method        method name to listen for
+	 * @param listenerClass Listener class to run when the method is invoked
+	 */
 	public void listenFor(String method, Class<?> listenerClass) {
 		if (!subscriptors.containsKey(method)) subscriptors.put(method, new ArrayList<>());
 
@@ -28,11 +34,18 @@ public class Observer implements InvocationHandler {
 			Listener listener = (Listener) listenerClass.getDeclaredConstructor(cArg).newInstance(target);
 
 			subscriptors.get(method).add(listener);
-		} catch (ReflectiveOperationException e) {
-			e.printStackTrace();
+		} catch (ReflectiveOperationException ignored) {
 		}
 	}
 
+	/**
+	 * Processes a method invocation on a proxy instance and returns the result.
+	 *
+	 * @param proxy  the proxy instance that the method was invoked on
+	 * @param method Method instance has been called
+	 * @param args   method arguments
+	 * @return target method invocation return
+	 */
 	@Override
 	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 		List<Listener> iterable = subscriptors.get(method.getName());
@@ -44,7 +57,11 @@ public class Observer implements InvocationHandler {
 		return method.invoke(target, args);
 	}
 
-	// https://www.youtube.com/watch?v=T3VucYqdoRo&ab_channel=ChristopherOkhravi
+	/**
+	 * Creates a proxy instance for the target.
+	 *
+	 * @param itf interface of the method invocations to handle
+	 */
 	@SuppressWarnings("unchecked")
 	public <T> T watch(Class<T> itf) {
 		return (T) Proxy.newProxyInstance(

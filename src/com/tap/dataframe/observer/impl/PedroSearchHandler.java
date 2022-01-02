@@ -1,9 +1,9 @@
-package com.tap.dataframe.handler;
+package com.tap.dataframe.observer.impl;
 
 import com.tap.dataframe.query.Query;
 import com.tap.dataframe.query.Operator;
 import com.tap.dataframe.query.StringComparison;
-import com.tap.handler.Listener;
+import com.tap.observer.Listener;
 
 import java.util.Map;
 
