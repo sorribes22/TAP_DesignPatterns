@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TxtDataFrame extends DataFrame {
-	int line = 0;
 	int labelIndex = 0;
 	int items = 0;
 	final String REGEX = "([A-z-0-9])*:((([A-z-0-9])*,)*||([A-z-0-9])*)*";
@@ -34,7 +33,7 @@ public class TxtDataFrame extends DataFrame {
 				content.put(splitRow1[0], new ArrayList<>());
 				splitRow2 = splitRow1[1].split(",");
 
-				if (line == 0)
+				if (size == 0)
 					items = splitRow2.length; //First time save the number of elements, to validate others columns
 				else if (splitRow2.length != items)
 					throw new ItemWithIncorrectNumberOfAttributesException(labelIndex, items, splitRow2.length);
@@ -46,7 +45,7 @@ public class TxtDataFrame extends DataFrame {
 
 			} else throw new InvalidFormatException(labelIndex + 1);
 
-			line++;
+			size++;
 		}
 	}
 }

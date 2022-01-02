@@ -17,7 +17,6 @@ public class AverageVisitor extends DataFrameVisitor {
 
     @Override
     public double getResult() {
-        return sum / count;
-
+        return count == 0 ? count : (sum / count);
     }
 }

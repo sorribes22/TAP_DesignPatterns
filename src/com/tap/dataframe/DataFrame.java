@@ -91,6 +91,10 @@ public abstract class DataFrame implements StringDataFrame {
         return content;
     }
 
+    public List<String> getLabels() {
+        return labels;
+    }
+
     //    @Override
 //    public String toString() {
 //        String output = "DataFrame{" +
