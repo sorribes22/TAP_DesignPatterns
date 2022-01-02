@@ -88,10 +88,6 @@ public class DirectoryDataFrame extends DataFrame {
         return childrens;
     }
 
-    public Map<String, List<String>> getContent() {
-    Map<String, List<String>> returnMap = n
-
-    }
 
     public String at(int row, String label) {
         int size;
@@ -104,7 +100,7 @@ public class DirectoryDataFrame extends DataFrame {
 
         return null;
     }
-*/
+
 
     @Override
     public Map<String, List<String>> query(Query<Map<String, String>> condition) {
