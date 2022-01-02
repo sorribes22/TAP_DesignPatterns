@@ -7,6 +7,8 @@ import com.tap.dataframe.exception.ItemWithIncorrectNumberOfAttributesException;
 import com.tap.dataframe.factory.DataFrameFactory;
 import com.tap.dataframe.factory.DirectoryDataFrameFactory;
 import com.tap.dataframe.observer.impl.PedroSearchHandler;
+import com.tap.dataframe.impl.DirectoryDataFrame;
+import com.tap.dataframe.query.IntComparasion;
 import com.tap.dataframe.query.Operator;
 import com.tap.dataframe.query.StringComparison;
 import com.tap.dataframe.visitor.AverageVisitor;
@@ -79,18 +81,21 @@ public class Main {
 		try {
 //			StringDataFrame directoryDF = withLogging(factory.makeDataFrame(), StringDataFrame.class);
 //			StringDataFrame directoryDF = whosSearchingForPedro(factory.makeDataFrame(), StringDataFrame.class);
-			Observer dataFrameObserver = new Observer(factory.makeDataFrame());
-			dataFrameObserver.listenFor(Observer.ANY, LoggingHandler.class);
-			dataFrameObserver.listenFor("query", PedroSearchHandler.class);
-			StringDataFrame directoryDF = dataFrameObserver.watch(StringDataFrame.class);
+			//Observer dataFrameObserver = new Observer(factory.makeDataFrame());
+			//dataFrameObserver.listenFor(Observer.ANY, LoggingHandler.class);
+			//dataFrameObserver.listenFor("query", PedroSearchHandler.class);
+			DataFrame directoryDF = new DirectoryDataFrame();
 //			directoryDF.listenFor("query", new PedroSearchHandler(target));
 			directoryDF.loadContent(directoryPointer);
-			directoryDF.query(new StringComparison("user", Operator.EQUALS, "pedro"));
-			System.out.println("hola");
+			System.out.println(directoryDF.size());
+			//System.out.println(directoryDF.query(new IntComparasion("Code", Operator.GREATER_OR_EQUAL, "2000")));
+			//System.out.println("hola");
 
+			/*
 			DataFrameVisitor v = new AverageVisitor();
 			directoryDF.accept(v);
-			System.out.println("El result es: "+v.getResult());
+			System.out.println("El result es: " + v.getResult());
+			*/
 
 			System.out.println(directoryDF.at(10, "Description"));
 
@@ -105,3 +110,35 @@ public class Main {
 
 	}
 }
+
+	/*
+	// https://www.youtube.com/watch?v=T3VucYqdoRo&ab_channel=ChristopherOkhravi
+	@SuppressWarnings("unchecked")
+	private static <T> T initObserver(T target, Class<T> itf) {
+		return (T) Proxy.newProxyInstance(
+			itf.getClassLoader(),
+			new Class<?>[] {itf},
+			new Observer(target)
+		);
+	}
+*/
+//	// https://www.youtube.com/watch?v=T3VucYqdoRo&ab_channel=ChristopherOkhravi
+//	@SuppressWarnings("unchecked")
+//	private static <T> T withLogging(T target, Class<T> itf) {
+//		return (T) Proxy.newProxyInstance(
+//			itf.getClassLoader(),
+//			new Class<?>[] {itf},
+//			new LoggingHandler(target)
+//		);
+//	}
+//
+//	// https://www.youtube.com/watch?v=T3VucYqdoRo&ab_channel=ChristopherOkhravi
+//	@SuppressWarnings("unchecked")
+//	private static <T> T whosSearchingForPedro(T target, Class<T> itf) {
+//		return (T) Proxy.newProxyInstance(
+//			itf.getClassLoader(),
+//			new Class<?>[] {itf},
+//			new PedroSearchHandler(target)
+//		);
+//	}
+

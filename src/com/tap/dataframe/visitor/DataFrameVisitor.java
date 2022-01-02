@@ -5,27 +5,41 @@ import com.tap.dataframe.impl.DirectoryDataFrame;
 
 public abstract class DataFrameVisitor {
 
+
+    /**
+     * Label to apply the current operation
+     */
     protected String labelToApply = "Code";
 
+    /**
+     * Visit a dataFrame that have implemented "accept" method and do the specific operation according to the Visitor
+     *
+     * @param df dataFrame to visit
+     */
     public void visit(DataFrame df) {
         if (df.getContent().containsKey(labelToApply)) {
             for (String value : df.getContent().get(labelToApply)) {
                 try {
                     calculate(Double.parseDouble(value));
                 } catch (NumberFormatException e) {
-                    System.out.println("NO NUMBER FORMAT: "+value);
+                    System.out.println("NO NUMBER FORMAT: " + value);
 
                 }
             }
         } else {
-            System.out.println("LABEL " + labelToApply + " NOT FOUND IN "+df.getContent().keySet());
+            System.out.println("LABEL " + labelToApply + " NOT FOUND IN " + df.getContent().keySet());
 
         }
 
     }
 
+    /**
+     * Visit all the sons of the composite structure
+     *
+     * @param dirDf Directory that have different sons to visit
+     */
     public void visitDirectory(DirectoryDataFrame dirDf) {
-        // System.out.println("Entrem a carpeta");
+        // Aixo no va dins del accept de DirectoryDataFrame
         for (DataFrame elem : dirDf.getChildrens()) {
             elem.accept(this);
         }

@@ -3,13 +3,14 @@ package com.tap.dataframe.impl;
 import com.tap.dataframe.DataFrame;
 import com.tap.dataframe.ImplResolver;
 import com.tap.dataframe.exception.InvalidFileFormatException;
+import com.tap.dataframe.query.Query;
 import com.tap.dataframe.visitor.DataFrameVisitor;
 
+import javax.xml.crypto.Data;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Optional;
+import java.util.*;
 
 public class DirectoryDataFrame extends DataFrame {
 
@@ -87,10 +88,6 @@ public class DirectoryDataFrame extends DataFrame {
         return childrens;
     }
 
-//    public Map<String, List<String>> getContent() {
-//    Map<String, List<String>> returnMap = n
-
-//    }
 
     public String at(int row, String label) {
         int size;
@@ -103,4 +100,33 @@ public class DirectoryDataFrame extends DataFrame {
 
         return null;
     }
+
+
+    @Override
+    public Map<String, List<String>> query(Query<Map<String, String>> condition) {
+        Map<String, List<String>> result = new HashMap<>();
+        Map<String, List<String>> result2 = new HashMap<>();
+
+        for (DataFrame df : this.childrens) {
+            result2 = df.query(condition);
+            if (result.isEmpty() && !(df instanceof DirectoryDataFrame)) {
+                for (String label : df.getLabels())
+                    result.put(label, new ArrayList<>());
+            }
+            for (String label : result2.keySet()) {
+                result.get(label).addAll(result2.get(label));
+            }
+        }
+        return result;
+    }
+
+
+    public int size() {
+        int totalSize = 0;
+        for(DataFrame df : childrens){
+            totalSize = totalSize + df.size();
+        }
+        return totalSize;
+    }
+
 }

@@ -63,5 +63,8 @@ public interface StringDataFrame extends Iterable<Map<String, String>> {
 	 */
 	Map<String, List<String>> getContent();
 
+	List<String> getLabels();
+
 	void accept(DataFrameVisitor visitor);
+
 }

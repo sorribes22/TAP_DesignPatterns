@@ -38,6 +38,9 @@ public abstract class DataFrame implements StringDataFrame {
 		return labels.size();
 	}
 
+    public List<String> getLabels() {
+        return labels;
+    }
 
 	@Override
 	public int size() {
