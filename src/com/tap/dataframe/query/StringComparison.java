@@ -1,7 +1,6 @@
 package com.tap.dataframe.query;
 
 import java.util.Map;
-import java.util.Objects;
 
 public class StringComparison extends Query<Map<String, String>> {
 

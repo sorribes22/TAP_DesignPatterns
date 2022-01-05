@@ -6,7 +6,6 @@ import com.tap.dataframe.exception.InvalidFileFormatException;
 import com.tap.dataframe.query.Query;
 import com.tap.dataframe.visitor.DataFrameVisitor;
 
-import javax.xml.crypto.Data;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Method;
@@ -103,7 +102,7 @@ public class DirectoryDataFrame extends DataFrame {
 
 
     @Override
-    public Map<String, List<String>> query(Query<Map<String, String>> condition) {
+    public List<Map<String, String>> query(Query<Map<String, String>> condition) {
         Map<String, List<String>> result = new HashMap<>();
         Map<String, List<String>> result2 = new HashMap<>();
 
@@ -129,4 +128,33 @@ public class DirectoryDataFrame extends DataFrame {
         return totalSize;
     }
 
+    public Iterator<Map<String, String>> iterator() {
+        return new Iterator<>() {
+
+            private Iterator<> currentIndex = 0;
+            // https://stackoverflow.com/questions/3610261/is-it-possible-to-merge-iterators-in-java/3610310
+            @Override
+            public boolean hasNext() {
+                return currentIndex < size;
+            }
+
+            @Override
+            public Map<String, String> next() {
+                Map<String, String> row = new HashMap<>();
+
+                for (String label : labels) {
+                    row.put(label, getContent().get(label).get(currentIndex));
+                }
+
+                currentIndex++;
+
+                return row;
+            }
+
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+        };
+    }
 }

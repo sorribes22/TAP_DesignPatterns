@@ -10,7 +10,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-public interface StringDataFrame extends Iterable<Map<String, String>> {
+public interface StringDataFrame {
+//public interface StringDataFrame extends Iterable<Map<String, String>> {
 	void loadContent(File file) throws InvalidFileFormatException, FileNotFoundException;
 
 	/**
@@ -56,7 +57,7 @@ public interface StringDataFrame extends Iterable<Map<String, String>> {
 	 * @param condition condition that data frame must fulfill
 	 * @return data frame content filtered
 	 */
-	Map<String, List<String>> query(Query<Map<String, String>> condition);
+	List<Map<String, String>> query(Query<Map<String, String>> condition);
 
 	/**
 	 * @return content of the data frame

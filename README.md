@@ -121,3 +121,4 @@ without need to change the API.
 - [**Design Patterns** @ _refactoring.guru_](https://refactoring.guru/design-patterns/catalog)
 - [**Dynamic Proxy** @ _youtube.com_](https://youtu.be/T3VucYqdoRo)
 - [**Streams + map() & reduce()** @ _sitepoint.com_](https://www.sitepoint.com/java-8-streams-filter-map-reduce/)
+- [**Convert Iterator to Stream** @ _mkyong.com_](https://mkyong.com/java8/java-8-how-to-convert-iterator-to-stream/)

@@ -5,6 +5,8 @@ import com.tap.dataframe.visitor.DataFrameVisitor;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 public abstract class DataFrame implements StringDataFrame {
 	/**
@@ -38,9 +40,9 @@ public abstract class DataFrame implements StringDataFrame {
 		return labels.size();
 	}
 
-    public List<String> getLabels() {
-        return labels;
-    }
+	public List<String> getLabels() {
+		return labels;
+	}
 
 	@Override
 	public int size() {
@@ -55,19 +57,27 @@ public abstract class DataFrame implements StringDataFrame {
 	}
 
 	@Override
-	public Map<String, List<String>> query(Query<Map<String, String>> condition) {
-		Map<String, List<String>> result = new HashMap<>();
-		for (String label : labels) result.put(label, new ArrayList<>());
+//	public Map<String, List<String>> query(Query<Map<String, String>> condition) {
+	public List<Map<String, String>> query(Query<Map<String, String>> condition) {
+//		Map<String, List<String>> result = new HashMap<>();
+//		for (String label : labels) result.put(label, new ArrayList<>());
+//
+//		for (Map<String, String> row : this) {
+//			if (condition.fulfill(row)) {
+//				for (String column : row.keySet()) {
+//					result.get(column).add(row.get(column));
+//				}
+//			}
+//		}
+//
+//		return result;
+//		content.entrySet().stream().filter(condition.fulfill(Collectors.mapping(Map.Entry::getKey, Collectors.toList())));
+		Stream<Map<String, String>> stream = StreamSupport.stream(Spliterators.spliteratorUnknownSize(
+				this.iterator(),
+				Spliterator.ORDERED)
+			, true);
 
-		for (Map<String, String> row : this) {
-			if (condition.fulfill(row)) {
-				for (String column : row.keySet()) {
-					result.get(column).add(row.get(column));
-				}
-			}
-		}
-
-		return result;
+		return stream.filter(condition::fulfill).collect(Collectors.toList());
 	}
 
 	@Override
