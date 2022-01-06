@@ -6,6 +6,8 @@ import com.tap.dataframe.exception.InvalidFileFormatException;
 import com.tap.dataframe.exception.ItemWithIncorrectNumberOfAttributesException;
 import com.tap.dataframe.factory.DataFrameFactory;
 import com.tap.dataframe.factory.DirectoryDataFrameFactory;
+import com.tap.dataframe.factory.TxtDataFrameFactory;
+import com.tap.dataframe.impl.TxtDataFrame;
 import com.tap.dataframe.observer.impl.PedroSearchHandler;
 import com.tap.dataframe.impl.DirectoryDataFrame;
 import com.tap.dataframe.query.IntComparasion;
@@ -76,9 +78,18 @@ public class Main {
 
 		String directory = "./files";
 		File directoryPointer = new File(directory);
-		DataFrameFactory factory = new DirectoryDataFrameFactory();
 
 		try {
+			String filename = "files/DamienLook3.txt";
+			File doc = new File(filename);
+			DataFrameFactory factory = new TxtDataFrameFactory();
+			DataFrame dataFrame = factory.makeDataFrame();
+			dataFrame.loadContent(doc);
+			System.out.println(dataFrame);
+
+
+
+
 //			StringDataFrame directoryDF = withLogging(factory.makeDataFrame(), StringDataFrame.class);
 //			StringDataFrame directoryDF = whosSearchingForPedro(factory.makeDataFrame(), StringDataFrame.class);
 			//Observer dataFrameObserver = new Observer(factory.makeDataFrame());
@@ -87,17 +98,16 @@ public class Main {
 			DataFrame directoryDF = new DirectoryDataFrame();
 //			directoryDF.listenFor("query", new PedroSearchHandler(target));
 			directoryDF.loadContent(directoryPointer);
-			System.out.println(directoryDF.size());
-			//System.out.println(directoryDF.query(new IntComparasion("Code", Operator.GREATER_OR_EQUAL, "2000")));
+			//System.out.println(directoryDF.size());
+			System.out.println(directoryDF.query(new IntComparasion("Code", Operator.GREATER_OR_EQUAL, "2000")));
 			//System.out.println("hola");
-
+			System.out.println(directoryDF);
 			/*
 			DataFrameVisitor v = new AverageVisitor();
 			directoryDF.accept(v);
 			System.out.println("El result es: " + v.getResult());
 			*/
 
-			System.out.println(directoryDF.at(10, "Description"));
 
 		} catch (ItemWithIncorrectNumberOfAttributesException e) {
 			e.printStackTrace();

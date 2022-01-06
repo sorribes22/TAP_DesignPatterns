@@ -23,14 +23,11 @@ public abstract class DataFrameVisitor {
                     calculate(Double.parseDouble(value));
                 } catch (NumberFormatException e) {
                     System.out.println("NO NUMBER FORMAT: " + value);
-
                 }
             }
         } else {
             System.out.println("LABEL " + labelToApply + " NOT FOUND IN " + df.getContent().keySet());
-
         }
-
     }
 
     /**
@@ -45,8 +42,18 @@ public abstract class DataFrameVisitor {
         }
     }
 
+    /**
+     * Do the specific operation depending on the implementation
+     *
+     * @param actual number to operate
+     */
     public abstract void calculate(double actual);
 
+
+    /**
+     *  Get the result of the visitor
+     * @return result
+     */
     public abstract double getResult();
 
 }

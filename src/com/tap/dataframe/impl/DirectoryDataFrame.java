@@ -79,6 +79,11 @@ public class DirectoryDataFrame extends DataFrame {
                 .orElse("");
     }
 
+    /**
+     * Accept a visitor
+     *
+     * @param v
+     */
     public void accept(DataFrameVisitor v) {
         v.visitDirectory(this);
 
@@ -102,6 +107,12 @@ public class DirectoryDataFrame extends DataFrame {
     }
 
 
+    /**
+     * Do a query in the structure
+     *
+     * @param condition Query object with  the attribute, operator and match)
+     * @return Map with item that fulfill  the condition
+     */
     @Override
     public Map<String, List<String>> query(Query<Map<String, String>> condition) {
         Map<String, List<String>> result = new HashMap<>();
@@ -120,10 +131,14 @@ public class DirectoryDataFrame extends DataFrame {
         return result;
     }
 
-
+    /**
+     * Size of the Composite structure
+     *
+     * @return number of items
+     */
     public int size() {
         int totalSize = 0;
-        for(DataFrame df : childrens){
+        for (DataFrame df : childrens) {
             totalSize = totalSize + df.size();
         }
         return totalSize;

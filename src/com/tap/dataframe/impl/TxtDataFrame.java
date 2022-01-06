@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class TxtDataFrame extends DataFrame {
 	int labelIndex = 0;
 	int items = 0;
-	final String REGEX = "([A-z-0-9])*:((([A-z-0-9])*,)*||([A-z-0-9])*)*";
+	final String REGEX = "([A-z-0-9_ ])*:((([A-z-0-9_ ])*,)*||([A-z-0-9_ ])*)*";
 
 	public TxtDataFrame() {
 
@@ -24,6 +24,7 @@ public class TxtDataFrame extends DataFrame {
 		String splitRow1[];
 		String splitRow2[];
 		String row;
+		size=0;
 		while (scanner.hasNextLine()) {
 			row = scanner.nextLine();
 			if (row.matches(REGEX)) {
@@ -39,7 +40,6 @@ public class TxtDataFrame extends DataFrame {
 					throw new ItemWithIncorrectNumberOfAttributesException(labelIndex, items, splitRow2.length);
 
 				for (String data : splitRow2) {
-					System.out.println(data);
 					content.get(splitRow1[0]).add(data);
 				}
 

@@ -7,6 +7,10 @@ public class SumVisitor extends DataFrameVisitor {
     private double sum = 0;
 
 
+    /**
+     * Summatory operation
+     * @param actual number to operate
+     */
     @Override
     public void calculate(double actual) {
         sum = sum + actual;
