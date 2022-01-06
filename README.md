@@ -47,7 +47,7 @@ content recusively. To solve that we used **class reflection** and a
 [custom implementation resolver mechanism](#impl_resolver).
 
 On Composite pattern we should override some methods of the common interface (`DataFrame` in this case) but we've
-only overridden 4 because it's an educational context.
+only overridden this 4 because it's an educational context:
 - `loadContent()`
 - `at()`
 - `size()`
@@ -106,12 +106,17 @@ StringDataFrame directoryDF = dataFrameObserver.watch(StringDataFrame.class);
 When we were implementing the **Composite** pattern we've found the need to know which concrete factory use for each
 specific file when we read a directory.
 
-To solve that we've build the `ImplResolver` class that reads **impl_resolver.json** file to attach a file extension to
-specific factory implementation. By now we only need to guess which implementation use by the file extension, then
+To solve that we've built the `ImplResolver` class that reads **impl_resolver.json** file to attach a file extension to
+specific factory implementation. Using a text file to store the "_file extension - specific factory_" attachment
+instead of storing it on the source code brings us the possibility of make new implementations of
+`DataFrame` without any need to recompile `DirectoryDataFrame` (or any another part of code using `ImplResolver`).
+
+By now we only need to guess which implementation use by the file extension, then
 this is the only functionality implemented but the file structure and the `ImplResolver` are designed to be extensible
 without need to change the API.
 
 
 ## Webliography
-- [Design Patterns](https://refactoring.guru/design-patterns/catalog)
-- [Dynamic Proxy](https://youtu.be/T3VucYqdoRo)
+- [**Design Patterns** @ _refactoring.guru_](https://refactoring.guru/design-patterns/catalog)
+- [**Dynamic Proxy** @ _youtube.com_](https://youtu.be/T3VucYqdoRo)
+- [**Streams + map() & reduce()** @ _sitepoint.com_](https://www.sitepoint.com/java-8-streams-filter-map-reduce/)
