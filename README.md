@@ -65,7 +65,6 @@ And we add Visitor to the previous Composite structure, and with it, we've imple
 
 We have to implement "accept" method in DataFrame class, and create the Visitor Abstract class (DataFrameVisitor) with the "visit" method, then we have 
 4 classes that extends this abstract class. Each of them add a new operation. As we have directories and sons we have 2 visit methods, one for the directory (go through the sons) and one for the dataFrame.
-### Observer + Dynamic proxy
 
 ### Observer + Dynamic proxy <a name="observer_dynamic_proxy"></a>
 ![](docs/img/observer_dynamic-proxy.png)
