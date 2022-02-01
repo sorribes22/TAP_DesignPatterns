@@ -1,37 +1,35 @@
 package test.tap.datafile;
 
 import com.tap.dataframe.DataFrame;
-import com.tap.dataframe.exception.InvalidFileFormatException;
-import com.tap.dataframe.exception.ItemWithIncorrectNumberOfAttributesException;
-import com.tap.dataframe.factory.CsvDataFrameFactory;
-import com.tap.dataframe.sort.NumberAscending;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
-import java.util.List;
+import java.io.File;
 import java.util.Scanner;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 // https://www.vogella.com/tutorials/JUnit/article.html
 public class DataFrameTest {
 
 	DataFrame dataFrame;
-//	@BeforeEach
-//	void setUp() {
-//
-//	}
+
+
+	@BeforeEach
+	void setUp() {
+
+	}
 	// TODO fer test més genèric. No de una implementació
-//	@Test
-//	@DisplayName("Can sort column")
-//	void testCanSortColumn() {
-//		String fileContent = """
-//			Name;"Number of pages";Editorial
-//			"Design patterns";364;Pearson
-//			"Clean architecture";320;Anaya
-//			""";
-//
+	@Test
+	@DisplayName("Can sort column")
+	void testCanSortColumn() {
+		String fileContent = """
+			Name;"Number of pages";Editorial
+			"Design patterns";364;Pearson
+			"Clean architecture";320;Anaya
+			""";
+
+
 //		dataFrame = new CsvDataFrameFactory().makeDataFrame();
 //		try {
 //			dataFrame.loadContent(fakeScanner(fileContent));
@@ -43,7 +41,7 @@ public class DataFrameTest {
 //
 //		assert result.get(0).equals("320");
 //		assert result.get(1).equals("364");
-//	}
+	}
 
 	/**
 	 * @param fileContent content of the file to mock
@@ -52,6 +50,7 @@ public class DataFrameTest {
 	 */
 	private Scanner fakeScanner(String fileContent) {
 		System.setIn(new ByteArrayInputStream(fileContent.getBytes()));
+		File fake = new File()
 
 		return new Scanner(System.in);
 	}
