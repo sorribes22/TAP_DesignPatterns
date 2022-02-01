@@ -13,4 +13,9 @@ public enum Operator {
 	Operator(String sign) {
 		this.sign = sign;
 	}
+
+	@Override
+	public String toString() {
+		return sign;
+	}
 }

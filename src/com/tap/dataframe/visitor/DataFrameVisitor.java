@@ -1,6 +1,7 @@
 package com.tap.dataframe.visitor;
 
 import com.tap.dataframe.DataFrame;
+import com.tap.dataframe.StringDataFrame;
 import com.tap.dataframe.impl.DirectoryDataFrame;
 
 public abstract class DataFrameVisitor {
@@ -37,7 +38,7 @@ public abstract class DataFrameVisitor {
      */
     public void visitDirectory(DirectoryDataFrame dirDf) {
         // Aixo no va dins del accept de DirectoryDataFrame
-        for (DataFrame elem : dirDf.getChildrens()) {
+        for (StringDataFrame elem : dirDf.getChildrens()) {
             elem.accept(this);
         }
     }

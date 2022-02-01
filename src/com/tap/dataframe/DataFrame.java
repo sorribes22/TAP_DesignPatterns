@@ -75,6 +75,11 @@ public abstract class DataFrame implements StringDataFrame {
 		return content;
 	}
 
+	@Override
+	public List<String> getColumnContent(String column) {
+		return content.get(column);
+	}
+
 	public void accept(DataFrameVisitor visitor) {
 		visitor.visit(this);
 	}

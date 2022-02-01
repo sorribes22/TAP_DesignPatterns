@@ -1,7 +1,6 @@
 package com.tap.dataframe.query;
 
 import java.util.Map;
-import java.util.Objects;
 
 public class StringComparison extends Query<Map<String, String>> {
 
@@ -13,6 +12,8 @@ public class StringComparison extends Query<Map<String, String>> {
 	public boolean fulfill(Map<String, String> item) {
 		String value = item.get(this.attribute);
 
+		if (value == null) return false;
+
 		return switch (this.operator) {
 			case EQUALS -> value.equals(this.match);
 			case NOT_EQUALS -> !value.equals(this.match);
@@ -21,5 +22,10 @@ public class StringComparison extends Query<Map<String, String>> {
 			case GREATER_OR_EQUAL -> value.equals(this.match) || value.compareTo(this.match) > 0;
 			default -> false;
 		};
+	}
+
+	@Override
+	public String toString() {
+		return "%s %s \"%s\"".formatted(this.attribute, this.operator, this.match);
 	}
 }

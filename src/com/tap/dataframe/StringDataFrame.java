@@ -11,6 +11,14 @@ import java.util.List;
 import java.util.Map;
 
 public interface StringDataFrame extends Iterable<Map<String, String>> {
+
+	/**
+	 * Scans the file parsing its content and filling the content schema.
+	 *
+	 * @param file pointer to file or directory
+	 * @throws InvalidFileFormatException
+	 * @throws FileNotFoundException
+	 */
 	void loadContent(File file) throws InvalidFileFormatException, FileNotFoundException;
 
 	/**
@@ -20,7 +28,7 @@ public interface StringDataFrame extends Iterable<Map<String, String>> {
 	 * @param label column
 	 * @return value of a row and column
 	 */
-	Object at(int row, String label);
+	String at(int row, String label);
 
 	/**
 	 * Returns the value from specific attribute item.
@@ -29,7 +37,7 @@ public interface StringDataFrame extends Iterable<Map<String, String>> {
 	 * @param column attribute to retrieve
 	 * @return value of a row and column
 	 */
-	Object iat(int row, int column);
+	String iat(int row, int column);
 
 	/**
 	 * @return number of labels
@@ -62,6 +70,8 @@ public interface StringDataFrame extends Iterable<Map<String, String>> {
 	 * @return content of the data frame
 	 */
 	Map<String, List<String>> getContent();
+
+	List<String> getColumnContent(String column);
 
 	List<String> getLabels();
 

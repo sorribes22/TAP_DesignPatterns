@@ -3,18 +3,12 @@ package com.tap;
 import com.tap.dataframe.DataFrame;
 import com.tap.dataframe.StringDataFrame;
 import com.tap.dataframe.exception.InvalidFileFormatException;
-import com.tap.dataframe.exception.ItemWithIncorrectNumberOfAttributesException;
+import com.tap.dataframe.factory.CsvDataFrameFactory;
 import com.tap.dataframe.factory.DataFrameFactory;
-import com.tap.dataframe.factory.DirectoryDataFrameFactory;
-import com.tap.dataframe.factory.TxtDataFrameFactory;
-import com.tap.dataframe.impl.TxtDataFrame;
+import com.tap.dataframe.mapreduce.MapReduce;
 import com.tap.dataframe.observer.impl.PedroSearchHandler;
-import com.tap.dataframe.impl.DirectoryDataFrame;
-import com.tap.dataframe.query.IntComparasion;
 import com.tap.dataframe.query.Operator;
 import com.tap.dataframe.query.StringComparison;
-import com.tap.dataframe.visitor.AverageVisitor;
-import com.tap.dataframe.visitor.DataFrameVisitor;
 import com.tap.observer.Observer;
 import com.tap.observer.impl.LoggingHandler;
 
@@ -78,77 +72,77 @@ public class Main {
 
 		String directory = "./files";
 		File directoryPointer = new File(directory);
+//
+//		try {
+//			String filename = "files/DamienLook3.txt";
+//			File doc = new File(filename);
+//			DataFrameFactory factory = new TxtDataFrameFactory();
+//			DataFrame dataFrame = factory.makeDataFrame();
+//			dataFrame.loadContent(doc);
+//			System.out.println(dataFrame);
+//
+//
+//
+//
+//			/*
+//			DataFrameVisitor v = new AverageVisitor();
+//			directoryDF.accept(v);
+//			System.out.println("El result es: " + v.getResult());
+//			*/
+
+
+//		} catch (ItemWithIncorrectNumberOfAttributesException e) {
+//			e.printStackTrace();
+//		} catch (InvalidFileFormatException e) {
+//			e.printStackTrace();
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		}
+
+		/* ********************************************************************
+		 * Uncomment functions in order to check how the functionalities work *
+		 **********************************************************************/
+
+//		 observerDynamicProxy();
+
+		// mapReduce();
+	}
+
+	private static void observerDynamicProxy() {
+		String directoryPath = "files/DimenLookupYear8277.csv";
+		File directoryPointer = new File(directoryPath);
+		DataFrameFactory factory = new CsvDataFrameFactory();
+
+		Observer dataFrameObserver = new Observer(factory.makeDataFrame());
+		dataFrameObserver.listenFor(Observer.ANY, LoggingHandler.class);
+		dataFrameObserver.listenFor("query", PedroSearchHandler.class);
+		StringDataFrame directoryDF = dataFrameObserver.watch(StringDataFrame.class);
 
 		try {
-			String filename = "files/DamienLook3.txt";
-			File doc = new File(filename);
-			DataFrameFactory factory = new TxtDataFrameFactory();
-			DataFrame dataFrame = factory.makeDataFrame();
-			dataFrame.loadContent(doc);
-			System.out.println(dataFrame);
-
-
-
-
-//			StringDataFrame directoryDF = withLogging(factory.makeDataFrame(), StringDataFrame.class);
-//			StringDataFrame directoryDF = whosSearchingForPedro(factory.makeDataFrame(), StringDataFrame.class);
-			//Observer dataFrameObserver = new Observer(factory.makeDataFrame());
-			//dataFrameObserver.listenFor(Observer.ANY, LoggingHandler.class);
-			//dataFrameObserver.listenFor("query", PedroSearchHandler.class);
-			DataFrame directoryDF = new DirectoryDataFrame();
-//			directoryDF.listenFor("query", new PedroSearchHandler(target));
 			directoryDF.loadContent(directoryPointer);
-			//System.out.println(directoryDF.size());
-			System.out.println(directoryDF.query(new IntComparasion("Code", Operator.GREATER_OR_EQUAL, "2000")));
-			//System.out.println("hola");
-			System.out.println(directoryDF);
-			/*
-			DataFrameVisitor v = new AverageVisitor();
-			directoryDF.accept(v);
-			System.out.println("El result es: " + v.getResult());
-			*/
-
-
-		} catch (ItemWithIncorrectNumberOfAttributesException e) {
-			e.printStackTrace();
-		} catch (InvalidFileFormatException e) {
-			e.printStackTrace();
-		} catch (FileNotFoundException e) {
+		} catch (InvalidFileFormatException | FileNotFoundException e) {
 			e.printStackTrace();
 		}
 
+		StringComparison comparator = new StringComparison("user", Operator.EQUALS, "pedro");
+		directoryDF.query(comparator);
+	}
 
+	private static void mapReduce() {
+		DataFrameFactory factory = new CsvDataFrameFactory();
+
+		StringDataFrame dataFrame = factory.makeDataFrame();
+		try {
+			dataFrame.loadContent(new File("files/DimenLookupYear8277.csv"));
+		} catch (InvalidFileFormatException | FileNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		Object result = MapReduce.over(dataFrame,
+			"Code",
+			item -> Integer.parseInt((String) item) + 1,
+			(first, second) -> (int) first + (int) second);
+
+		System.out.println(result);
 	}
 }
-
-	/*
-	// https://www.youtube.com/watch?v=T3VucYqdoRo&ab_channel=ChristopherOkhravi
-	@SuppressWarnings("unchecked")
-	private static <T> T initObserver(T target, Class<T> itf) {
-		return (T) Proxy.newProxyInstance(
-			itf.getClassLoader(),
-			new Class<?>[] {itf},
-			new Observer(target)
-		);
-	}
-*/
-//	// https://www.youtube.com/watch?v=T3VucYqdoRo&ab_channel=ChristopherOkhravi
-//	@SuppressWarnings("unchecked")
-//	private static <T> T withLogging(T target, Class<T> itf) {
-//		return (T) Proxy.newProxyInstance(
-//			itf.getClassLoader(),
-//			new Class<?>[] {itf},
-//			new LoggingHandler(target)
-//		);
-//	}
-//
-//	// https://www.youtube.com/watch?v=T3VucYqdoRo&ab_channel=ChristopherOkhravi
-//	@SuppressWarnings("unchecked")
-//	private static <T> T whosSearchingForPedro(T target, Class<T> itf) {
-//		return (T) Proxy.newProxyInstance(
-//			itf.getClassLoader(),
-//			new Class<?>[] {itf},
-//			new PedroSearchHandler(target)
-//		);
-//	}
-

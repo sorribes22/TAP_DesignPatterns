@@ -5,10 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.util.Scanner;
-
 // https://www.vogella.com/tutorials/JUnit/article.html
 public class DataFrameTest {
 
@@ -48,10 +44,10 @@ public class DataFrameTest {
 	 * @return mocked scanner
 	 * @author http://www.javased.com/?post=1647907
 	 */
-	private Scanner fakeScanner(String fileContent) {
-		System.setIn(new ByteArrayInputStream(fileContent.getBytes()));
-		File fake = new File()
-
-		return new Scanner(System.in);
-	}
+//	private Scanner fakeScanner(String fileContent) {
+//		System.setIn(new ByteArrayInputStream(fileContent.getBytes()));
+//		File fake = new File();
+//
+//		return new Scanner(System.in);
+//	}
 }

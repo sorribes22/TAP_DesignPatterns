@@ -4,26 +4,26 @@ This project aims to be a sandbox to apply concepts like **Design patterns**, **
 By axsor and Roger.
 
 ## Table of contents:
-- [Problem statement](#Problem statement)
-- [Design patterns](#Design patterns)
-  - [Abstract factory](#Abstract factory)
+- [Problem statement](#problem_statement)
+- [Design patterns](#design_patterns)
+  - [Abstract factory](#abstract_factory)
   - [Composite](#Composite)
   - [Visitor](#Visitor)
   - [Observer + Dynamic proxy](#observer_dynamic_proxy)
-- [Code smells](#Code smells)
+- [Code smells](#code_smells)
 - [Streams + MapReduce](#streams_mapreduce)
 - [Testing](#Testing)
 - [Extras](#Extras)
 - [Webliography](#Webliography)
 
-## Problem statement
+## Problem statement <a name="problem_statement"></a>
 The problem statement can be read at [exercice.pdf](docs/exercice.pdf).
 **The goal is to build a DataFrame library using design patterns.**
 We chose columnar design to store the data of readen DataFrame because it's the more appropriate to resolve the problem
 statement.
 
-## Design patterns
-### Abstract factory
+## Design patterns <a name="design_patterns"></a>
+### Abstract factory <a name="abstract_factory"></a>
 ![](docs/img/abstract-factory.png)
 
 This creational design pattern lets you create different kind of objects of the same family without need to specify
@@ -95,7 +95,7 @@ dataFrameObserver.listenFor("query", PedroSearchHandler.class);
 StringDataFrame directoryDF = dataFrameObserver.watch(StringDataFrame.class);
 ```
 
-## Code smells
+## Code smells <a name="code_smells"></a>
 
 ## Streams + MapReduce <a name="streams_mapreduce"></a>
 
