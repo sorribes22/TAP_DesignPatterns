@@ -12,8 +12,8 @@ public class IntComparasion extends Query<Map<String, String>> {
 	public boolean fulfill(Map<String, String> item) {
 
 		int value = Integer.parseInt(item.get(this.attribute));
-		System.out.println(value);
 		int intMatch = Integer.parseInt(this.match);
+
 		return switch (this.operator) {
 			case EQUALS -> value == intMatch;
 			case NOT_EQUALS -> value != intMatch;
