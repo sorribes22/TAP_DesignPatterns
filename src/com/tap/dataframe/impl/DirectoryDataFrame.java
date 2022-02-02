@@ -14,7 +14,7 @@ import java.util.*;
 
 public class DirectoryDataFrame extends DataFrame {
 
-	private ArrayList<StringDataFrame> childrens = new ArrayList<>();
+	private ArrayList<StringDataFrame> children = new ArrayList<>();
 
 	private ImplResolver implResolver = new ImplResolver();
 
@@ -53,10 +53,7 @@ public class DirectoryDataFrame extends DataFrame {
 					System.out.format("Could not resolve file extension: '%s'\n", extension);
 				} catch (InvalidFileFormatException e) {
 					System.out.println(e.getMessage());
-				} catch (FileNotFoundException e) {
-					// todo enhancement
-					e.printStackTrace();
-				} catch (ReflectiveOperationException e) {
+				} catch (FileNotFoundException | ReflectiveOperationException e) {
 					e.printStackTrace();
 				}
 			}
@@ -64,7 +61,7 @@ public class DirectoryDataFrame extends DataFrame {
 	}
 
 	public void add(DataFrame children) {
-		childrens.add(children);
+		this.children.add(children);
 	}
 
 	/**
@@ -89,15 +86,15 @@ public class DirectoryDataFrame extends DataFrame {
 
 	}
 
-	public ArrayList<StringDataFrame> getChildrens() {
-		return childrens;
+	public ArrayList<StringDataFrame> getChildren() {
+		return children;
 	}
 
 
 	public String at(int row, String label) {
 		int size;
 
-		for (StringDataFrame children : this.getChildrens()) {
+		for (StringDataFrame children : this.getChildren()) {
 			size = children.size();
 			if (row > size) row -= size;
 			else return children.at(row, label);
@@ -118,7 +115,7 @@ public class DirectoryDataFrame extends DataFrame {
 		Map<String, List<String>> result = new HashMap<>();
 		Map<String, List<String>> result2 = new HashMap<>();
 
-		for (StringDataFrame df : this.childrens) {
+		for (StringDataFrame df : this.children) {
 			result2 = df.query(condition);
 			if (result.isEmpty() && !(df instanceof DirectoryDataFrame)) {
 				for (String label : df.getLabels())
@@ -135,7 +132,7 @@ public class DirectoryDataFrame extends DataFrame {
 	public List<String> getColumnContent(String column) {
 		List<String> result = new ArrayList<>();
 
-		childrens.parallelStream().forEach(dF -> result.addAll(dF.getColumnContent(column)));
+		children.parallelStream().forEach(dF -> result.addAll(dF.getColumnContent(column)));
 
 		return result;
 	}
@@ -147,7 +144,7 @@ public class DirectoryDataFrame extends DataFrame {
 	 */
 	public int size() {
 		int totalSize = 0;
-		for (StringDataFrame df : childrens) {
+		for (StringDataFrame df : children) {
 			totalSize = totalSize + df.size();
 		}
 		return totalSize;

@@ -19,7 +19,7 @@ public class IntComparasion extends Query<Map<String, String>> {
 			case NOT_EQUALS -> value != intMatch;
 			case LESS -> value < intMatch;
 			case GREATER -> value > intMatch;
-			case GREATER_OR_EQUAL -> value >=  intMatch;
+			case GREATER_OR_EQUAL -> value >= intMatch;
 			default -> false;
 		};
 	}

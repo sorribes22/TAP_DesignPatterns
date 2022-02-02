@@ -10,7 +10,6 @@ By axsor and Roger.
   - [Composite](#Composite)
   - [Visitor](#Visitor)
   - [Observer + Dynamic proxy](#observer_dynamic_proxy)
-- [Code smells](#code_smells)
 - [Streams + MapReduce](#streams_mapreduce)
 - [Testing](#Testing)
 - [Extras](#Extras)
@@ -94,8 +93,6 @@ dataFrameObserver.listenFor("query", PedroSearchHandler.class);
 
 StringDataFrame directoryDF = dataFrameObserver.watch(StringDataFrame.class);
 ```
-
-## Code smells <a name="code_smells"></a>
 
 ## Streams + MapReduce <a name="streams_mapreduce"></a>
 

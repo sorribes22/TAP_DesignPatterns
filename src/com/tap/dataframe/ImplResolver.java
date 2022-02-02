@@ -35,6 +35,7 @@ public class ImplResolver {
 
 	/**
 	 * Resolve map implementation based on file extension.
+	 *
 	 * @param extension file extension
 	 * @return namespace from factory implementation
 	 */

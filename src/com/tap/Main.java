@@ -92,7 +92,7 @@ public class Main {
 
 		/* PART 1 */
 //		dataFrame();
-
+//
 		/* PART 2 */
 //		composite();
 
@@ -133,7 +133,7 @@ public class Main {
 
 		dataFrame.loadContent(directoryPointer);
 
-		System.out.println(dataFrame.getChildrens());
+		System.out.println(dataFrame.getChildren());
 	}
 
 	private static void mapReduce() {
@@ -152,6 +152,10 @@ public class Main {
 			(first, second) -> (int) first + (int) second);
 
 		System.out.println(result);
+	}
+
+	private static void visitor() {
+		// TODO Roger
 	}
 
 	private static void observerDynamicProxy() {

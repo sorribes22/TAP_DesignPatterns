@@ -24,7 +24,7 @@ public class TxtDataFrame extends DataFrame {
 		String splitRow1[];
 		String splitRow2[];
 		String row;
-		size=0;
+		size = 0;
 		while (scanner.hasNextLine()) {
 			row = scanner.nextLine();
 			if (row.matches(REGEX)) {
