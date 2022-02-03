@@ -101,9 +101,7 @@ public abstract class DataFrame implements StringDataFrame {
 				for (String label : labels) {
 					row.put(label, getContent().get(label).get(currentIndex));
 				}
-
 				currentIndex++;
-
 				return row;
 			}
 

@@ -9,11 +9,15 @@ import com.tap.dataframe.impl.DirectoryDataFrame;
 import com.tap.dataframe.mapreduce.MapReduce;
 import com.tap.dataframe.observer.impl.PedroSearchHandler;
 import com.tap.dataframe.sort.NumberAscending;
+import com.tap.dataframe.visitor.*;
 import com.tap.observer.Observer;
 import com.tap.observer.impl.LoggingHandler;
+import org.junit.runner.JUnitCore;
+import test.tap.datafile.impl.TestDataFrame;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
@@ -23,10 +27,17 @@ public class Main {
 	private static DataFrame dataFrame;
 
 	public static void main(String[] args) {
-//		String filename = "files/Prova.csv";
+
+//		DataFrameFactory factory = new CsvDataFrameFactory();
+//		StringDataFrame dataFrame = factory.makeDataFrame();
 //
-//		//DataFrameFactory factory = new DataFrameFactory(filename);
-//		openFile(filename);
+//		try {
+//			dataFrame.loadContent(new File("files/DimenLooku2.csv"));
+//		} catch (InvalidFileFormatException | FileNotFoundException e) {
+//			e.printStackTrace();
+//		}
+//		Query<Map<String, String>> query = new StringComparison("Code", Operator.EQUALS, "6");
+//		dataFrame.query(query);
 //
 //		try {
 //			dataFrame = new CsvDataFrame();
@@ -85,6 +96,7 @@ public class Main {
 //			System.out.println("El result es: " + v.getResult());
 //			*/
 
+		//JUnitCore.runClasses(TestDataFrame.class);
 
 		/* ***********************************************************************
 		 * Uncomment method calls in order to check how the functionalities work *
@@ -92,7 +104,7 @@ public class Main {
 
 		/* PART 1 */
 //		dataFrame();
-//
+
 		/* PART 2 */
 //		composite();
 
@@ -155,7 +167,20 @@ public class Main {
 	}
 
 	private static void visitor() {
-		// TODO Roger
+
+		File directoryPointer = new File("files");
+
+		DataFrameFactory factory = new DirectoryDataFrameFactory();
+		DirectoryDataFrame directoryData= (DirectoryDataFrame) factory.makeDataFrame();
+		directoryData.loadContent(directoryPointer);
+
+		DataFrameVisitor v = new MaximumVisitor();
+		directoryData.accept(v);
+		System.out.println("The maximum value of "+v.getLabelToApply()+" in Files folder is: "+ v.getResult());
+		v = new MinimumVisitor();
+		v.setLabelToApply("Description");
+		directoryData.accept(v);
+		System.out.println("The minimum value of "+v.getLabelToApply()+" in Files folder is: "+v.getResult());
 	}
 
 	private static void observerDynamicProxy() {

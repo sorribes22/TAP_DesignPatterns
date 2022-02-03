@@ -26,22 +26,11 @@ public abstract class DataFrameVisitor {
 					System.out.println("NO NUMBER FORMAT: " + value);
 				}
 			}
-		} else {
+		}else if(!(df instanceof DirectoryDataFrame)) {
 			System.out.println("LABEL " + labelToApply + " NOT FOUND IN " + df.getContent().keySet());
 		}
 	}
 
-	/**
-	 * Visit all the sons of the composite structure
-	 *
-	 * @param dirDf Directory that have different sons to visit
-	 */
-	public void visitDirectory(DirectoryDataFrame dirDf) {
-		// Aixo no va dins del accept de DirectoryDataFrame
-		for (StringDataFrame elem : dirDf.getChildren()) {
-			elem.accept(this);
-		}
-	}
 
 	/**
 	 * Do the specific operation depending on the implementation
@@ -57,5 +46,24 @@ public abstract class DataFrameVisitor {
 	 * @return result
 	 */
 	public abstract double getResult();
+
+	/**
+	 * Get the label we are applying
+	 *
+	 * @return label
+	 */
+	public String getLabelToApply(){
+		return labelToApply;
+	}
+
+
+	/**
+	 * Set a new label to apply the visitor
+	 *
+	 * @param label
+	 */
+	public void setLabelToApply(String label){
+		labelToApply = label;
+	}
 
 }

@@ -71,10 +71,23 @@ public interface StringDataFrame extends Iterable<Map<String, String>> {
 	 */
 	Map<String, List<String>> getContent();
 
+	/**
+	 *
+	 * @param column column to search
+	 * @return content of specific column
+	 */
 	List<String> getColumnContent(String column);
 
+	/**
+	 *
+	 * @return List of all labels
+	 */
 	List<String> getLabels();
 
+	/**
+	 * Accept any implementation of DataFrameVisitor
+	 * @param visitor specific visitor
+	 */
 	void accept(DataFrameVisitor visitor);
 
 }
