@@ -16,11 +16,8 @@ public class FakeDataFrame extends DataFrame {
 
 	}
 
-	public void fillTestContent(Map<String,List<String>> content){
-
+	public void fillTestContent(Map<String, List<String>> content) {
 		this.content = content;
 		this.labels = new ArrayList<>(content.keySet());
-		this.size = content.size();
-
 	}
 }
