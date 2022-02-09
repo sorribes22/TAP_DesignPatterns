@@ -2,27 +2,18 @@ package com.tap.dataframe.mapreduce;
 
 import com.tap.dataframe.StringDataFrame;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
 
 public class MapReduce {
-	public static Object over(
-		List<StringDataFrame> dataFrames,
-		String label,
-		Function<Object, Object> map,
-		BinaryOperator<Object> reduce) {
-
-		List<Object> result = new ArrayList<>();
-
-		dataFrames
-			.parallelStream()
-			.forEach(dF -> result.addAll(dF.getColumnContent(label)));
-
-		return result.parallelStream().map(map).reduce(reduce);
-	}
-
+	/**
+	 * Applies custom map & reduce methods over a column of dataframe.
+	 * @param dataFrame Target
+	 * @param label Column
+	 * @param map Map logic
+	 * @param reduce Reduce logic
+	 * @return Result of map & reduce
+	 */
 	public static Object over(
 		StringDataFrame dataFrame,
 		String label,

@@ -95,7 +95,15 @@ StringDataFrame directoryDF = dataFrameObserver.watch(StringDataFrame.class);
 ```
 
 ## Streams + MapReduce <a name="streams_mapreduce"></a>
+We've implemented a class that using parallel streams applies map reduce over a column of data frame.
 
+Example:
+```java
+Object result = MapReduce.over(dataFrame,
+			"Column",
+			item -> Integer.parseInt((String) item) + 1,    // map
+			(first, second) -> (int) first + (int) second); // reduce
+```
 ## Testing
 
 ## Extras
