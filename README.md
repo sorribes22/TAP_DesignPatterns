@@ -55,15 +55,23 @@ only overridden this 4 because it's an educational context:
 ### Visitor
 ![](docs/img/visitor.png)
 
-The Visitor design pattern allow us to implement new behaviors to a class, without adding them in the own class.
-And we add Visitor to the previous Composite structure, and with it, we've implemented 4 new operations:
-- Maxium
-- Minium
-- Average
-- Summatory
+The **Visitor** design pattern allow us to implement new behaviors to a class, without adding them in the own class.
+And we add Visitor to the previous `Composite` structure, and with it, we've implemented 4 new operations:
+- `Maxium`
+- `Minium`
+- `Average`
+- `Summatory`
 
-We have to implement "accept" method in DataFrame class, and create the Visitor Abstract class (DataFrameVisitor) with the "visit" method, then we have 
-4 classes that extends this abstract class. Each of them add a new operation. As we have directories and sons we have 2 visit methods, one for the directory (go through the sons) and one for the dataFrame.
+We have to implement "accept" method in DataFrame class, and create the `Visitor` Abstract class (`DataFrameVisitor`) with 
+the "visit" method, then we have 4 classes that extends this abstract class. Each of them add a new operation. As we
+have directories and sons, when a `DirectoryDataFrame` accept a `Visitor`, all of his children have to accept too. Then 
+`Visitor` visits all elements of `Composite`structure.
+
+Example:
+```java
+DataFrameVisitor v = new MaximumVisitor();
+directoryDataFrame.accept(v);
+```
 
 ### Observer + Dynamic proxy <a name="observer_dynamic_proxy"></a>
 ![](docs/img/observer_dynamic-proxy.png)
@@ -106,18 +114,18 @@ Object result = MapReduce.over(dataFrame,
 ```
 ## Testing
 
-We've realized different Unit Tests to check the correct working of the DataFrame interface.
-To do this we've created TestDataFrame, where the tests are allocated, and FakeDataFrame class, that simulates a real data frame.\
-Before to execute tests, the setup function is executed to fill the FakeDataFrame.\
-And after execute tests, the tearDown function is executed to delete the FakeDataFrame
+We've realized different `Unit Tests` to check the correct working of the `DataFrame` interface.
+To do this we've created `TestDataFrame` class, where the tests are allocated, and `FakeDataFrame` class, that simulates a real `DataFrame`.\
+Before to execute tests, the `setup()` function is executed to fill the `FakeDataFrame`.\
+And after execute tests, the `tearDown()` function is executed to delete the `FakeDataFrame`
 
 The operations to check are :
 
-- At
-- Iat
-- Sort 
-- Query
-- Accept a Visitor
+- `At`
+- `Iat`
+- `Sort`
+- `Query`
+- `Accept (Visitor)`
 
 
 ## Extras
