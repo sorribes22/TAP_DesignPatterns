@@ -106,6 +106,20 @@ Object result = MapReduce.over(dataFrame,
 ```
 ## Testing
 
+We've realized different Unit Tests to check the correct working of the DataFrame interface.
+To do this we've created TestDataFrame, where the tests are allocated, and FakeDataFrame class, that simulates a real data frame.\
+Before to execute tests, the setup function is executed to fill the FakeDataFrame.\
+And after execute tests, the tearDown function is executed to delete the FakeDataFrame
+
+The operations to check are :
+
+- At
+- Iat
+- Sort 
+- Query
+- Accept a Visitor
+
+
 ## Extras
 ### Implementation resolver <a name="impl_resolver"></a>
 When we were implementing the **Composite** pattern we've found the need to know which concrete factory use for each
