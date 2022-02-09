@@ -1,7 +1,6 @@
 package com.tap.dataframe.visitor;
 
 import com.tap.dataframe.DataFrame;
-import com.tap.dataframe.StringDataFrame;
 import com.tap.dataframe.impl.DirectoryDataFrame;
 
 public abstract class DataFrameVisitor {
@@ -26,7 +25,7 @@ public abstract class DataFrameVisitor {
 					System.out.println("NO NUMBER FORMAT: " + value);
 				}
 			}
-		}else if(!(df instanceof DirectoryDataFrame)) {
+		} else if (!(df instanceof DirectoryDataFrame)) {
 			System.out.println("LABEL " + labelToApply + " NOT FOUND IN " + df.getContent().keySet());
 		}
 	}
@@ -52,7 +51,7 @@ public abstract class DataFrameVisitor {
 	 *
 	 * @return label
 	 */
-	public String getLabelToApply(){
+	public String getLabelToApply() {
 		return labelToApply;
 	}
 
@@ -62,7 +61,7 @@ public abstract class DataFrameVisitor {
 	 *
 	 * @param label
 	 */
-	public void setLabelToApply(String label){
+	public void setLabelToApply(String label) {
 		labelToApply = label;
 	}
 

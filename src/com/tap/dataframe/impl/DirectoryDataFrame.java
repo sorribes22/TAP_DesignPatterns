@@ -82,7 +82,7 @@ public class DirectoryDataFrame extends DataFrame {
 	 * @param v
 	 */
 	public void accept(DataFrameVisitor v) {
-		for (StringDataFrame child: children){
+		for (StringDataFrame child : children) {
 			v.visit((DataFrame) child);
 		}
 	}

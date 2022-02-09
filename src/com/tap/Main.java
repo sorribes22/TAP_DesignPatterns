@@ -1,23 +1,26 @@
 package com.tap;
 
-import com.tap.dataframe.exception.*;
-import com.tap.dataframe.factory.*;
-import com.tap.dataframe.query.*;
 import com.tap.dataframe.DataFrame;
 import com.tap.dataframe.StringDataFrame;
+import com.tap.dataframe.exception.InvalidFileFormatException;
+import com.tap.dataframe.factory.CsvDataFrameFactory;
+import com.tap.dataframe.factory.DataFrameFactory;
+import com.tap.dataframe.factory.DirectoryDataFrameFactory;
 import com.tap.dataframe.impl.DirectoryDataFrame;
 import com.tap.dataframe.mapreduce.MapReduce;
 import com.tap.dataframe.observer.impl.PedroSearchHandler;
+import com.tap.dataframe.query.IntComparasion;
+import com.tap.dataframe.query.Operator;
+import com.tap.dataframe.query.StringComparison;
 import com.tap.dataframe.sort.NumberAscending;
-import com.tap.dataframe.visitor.*;
+import com.tap.dataframe.visitor.DataFrameVisitor;
+import com.tap.dataframe.visitor.MaximumVisitor;
+import com.tap.dataframe.visitor.MinimumVisitor;
 import com.tap.observer.Observer;
 import com.tap.observer.impl.LoggingHandler;
-import org.junit.runner.JUnitCore;
-import test.tap.datafile.impl.TestDataFrame;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
@@ -27,76 +30,6 @@ public class Main {
 	private static DataFrame dataFrame;
 
 	public static void main(String[] args) {
-
-//		DataFrameFactory factory = new CsvDataFrameFactory();
-//		StringDataFrame dataFrame = factory.makeDataFrame();
-//
-//		try {
-//			dataFrame.loadContent(new File("files/DimenLooku2.csv"));
-//		} catch (InvalidFileFormatException | FileNotFoundException e) {
-//			e.printStackTrace();
-//		}
-//		Query<Map<String, String>> query = new StringComparison("Code", Operator.EQUALS, "6");
-//		dataFrame.query(query);
-//
-//		try {
-//			dataFrame = new CsvDataFrame();
-//			dataFrame.loadContent(file);
-//		} catch (ItemWithIncorrectNumberOfAttributesException e) {
-//			e.printStackTrace();
-//		}
-//
-//		System.out.println(dataFrame);
-//
-//		IQuery<Map<String, String>> query = new StringComparison("Nom", Operator.EQUALS, "Àlex");
-//		System.out.println(dataFrame.query(query));
-//
-//		Comparator<String> comparator = new NumberAscending();
-//		System.out.println(dataFrame.sort("Altura", comparator));
-//
-//		Comparator<String> comparator2 = new NumberDescending();
-//		System.out.println(dataFrame.sort("Altura", comparator2));
-
-//		String filename = "files/Prova.json";
-//
-//		//DataFrameFactory factory = new DataFrameFactory(filename);
-//		openFile(filename);
-//
-//		try {
-//			dataFrame = new JsonDataFrame();
-//			dataFrame.loadContent(file);
-//		} catch (InvalidFileFormatException e) {
-//			e.printStackTrace();
-//		}
-//
-//		System.out.println(dataFrame);
-//		System.out.println(dataFrame.getContent().get("Nom").get(1));
-
-//		IQuery<Map<String, String>> query = new StringComparison("Nom", Operator.EQUALS, "Àlex");
-//		System.out.println(dataFrame.query(query));
-//
-//		Comparator<String> comparator = new NumberAscending();
-//		System.out.println(dataFrame.sort("Altura", comparator));
-//
-//		Comparator<String> comparator2 = new NumberDescending();
-//		System.out.println(dataFrame.sort("Altura", comparator2));
-
-//
-//		try {
-//			String filename = "files/DamienLook3.txt";
-//			File doc = new File(filename);
-//			DataFrameFactory factory = new TxtDataFrameFactory();
-//			DataFrame dataFrame = factory.makeDataFrame();
-//			dataFrame.loadContent(doc);
-//			System.out.println(dataFrame);
-
-//			/*
-//			DataFrameVisitor v = new AverageVisitor();
-//			directoryDF.accept(v);
-//			System.out.println("El result es: " + v.getResult());
-//			*/
-
-		//JUnitCore.runClasses(TestDataFrame.class);
 
 		/* ***********************************************************************
 		 * Uncomment method calls in order to check how the functionalities work *
@@ -171,16 +104,16 @@ public class Main {
 		File directoryPointer = new File("files");
 
 		DataFrameFactory factory = new DirectoryDataFrameFactory();
-		DirectoryDataFrame directoryData= (DirectoryDataFrame) factory.makeDataFrame();
+		DirectoryDataFrame directoryData = (DirectoryDataFrame) factory.makeDataFrame();
 		directoryData.loadContent(directoryPointer);
 
 		DataFrameVisitor v = new MaximumVisitor();
 		directoryData.accept(v);
-		System.out.println("The maximum value of "+v.getLabelToApply()+" in Files folder is: "+ v.getResult());
+		System.out.println("The maximum value of " + v.getLabelToApply() + " in Files folder is: " + v.getResult());
 		v = new MinimumVisitor();
 		v.setLabelToApply("Description");
 		directoryData.accept(v);
-		System.out.println("The minimum value of "+v.getLabelToApply()+" in Files folder is: "+v.getResult());
+		System.out.println("The minimum value of " + v.getLabelToApply() + " in Files folder is: " + v.getResult());
 	}
 
 	private static void observerDynamicProxy() {
