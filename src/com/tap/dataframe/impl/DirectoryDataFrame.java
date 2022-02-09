@@ -83,7 +83,7 @@ public class DirectoryDataFrame extends DataFrame {
 	 */
 	public void accept(DataFrameVisitor v) {
 		for (StringDataFrame child: children){
-			v.visit((DataFrame) child);
+			child.accept(v);
 		}
 	}
 
@@ -132,9 +132,7 @@ public class DirectoryDataFrame extends DataFrame {
 	@Override
 	public List<String> getColumnContent(String column) {
 		List<String> result = new ArrayList<>();
-
 		children.parallelStream().forEach(dF -> result.addAll(dF.getColumnContent(column)));
-
 		return result;
 	}
 
