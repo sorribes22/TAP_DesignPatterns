@@ -45,7 +45,7 @@ public class Main {
 //		mapReduce();
 
 		/* PART 5 */
-		visitor();
+//		visitor();
 
 		/* PART 6 */
 //		observerDynamicProxy();
